@@ -1,0 +1,24 @@
+.ranking {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  ul {
+    width: 100%;
+    margin-top: 20px;
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-top: 1px solid $color-blue-light;
+      span {
+        color: $color-blue-light;
+      }
+
+      &:last-child {
+        border-bottom: 1px solid $color-blue-light;
+      }
+    }
+  }
+}
