@@ -51,5 +51,3 @@
 "lastname": "One",
 "firstname": ""
 }
-
-resend API_KEY : 8e+R7!@EH4LU]-5
