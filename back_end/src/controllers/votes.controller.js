@@ -5,9 +5,6 @@ const castVote = async (req, res) => {
     const userId = req.user?.id;
     const votes = req.body.votes;
 
-    console.log("User ID:", userId);
-    console.log("Votes reçus:", votes);
-
     if (!userId || !Array.isArray(votes)) {
       return res.status(400).json({ message: "Données invalides." });
     }

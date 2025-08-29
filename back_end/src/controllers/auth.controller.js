@@ -92,7 +92,11 @@ const login = async (req, res) => {
         });
         res.json({
           message: "Connexion autorisée.",
-          user: { pseudo, role: user.role },
+          user: {
+            id: user.id,
+            pseudo,
+            role: user.role,
+          },
         });
 
         return;

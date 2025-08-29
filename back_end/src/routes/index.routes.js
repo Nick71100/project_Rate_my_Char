@@ -19,7 +19,7 @@ router.use("/characters", charactersRouter);
 router.use("/users", usersRouter);
 router.use("/auth", authRouter);
 router.use("/artworks", artworkRouter);
-router.use("/gender", genderRouter);
+router.use("/genders", genderRouter);
 router.use("/categories", categorieRouter);
 router.use("/admin", checkToken, checkRole(1), adminRouter);
 router.use("/votes", voteRouter);
