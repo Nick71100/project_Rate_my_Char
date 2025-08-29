@@ -19,11 +19,6 @@ const AddCharacterModal = ({
   const [artworks, setArtworks] = useState([]);
   const authState = useSelector((state) => state.auth);
   const user = useSelector((state) => state.auth.user);
-
-  console.log("État Redux complet:", authState);
-  console.log("Utilisateur Redux:", user);
-  console.log("ID utilisateur:", user?.id);
-
   const userId = user?.id;
 
   if (!userId) {
