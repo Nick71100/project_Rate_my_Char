@@ -10,6 +10,7 @@ import UsersAdmin from "../pages/admin/UsersAdmin";
 import CharsAdmin from "../pages/admin/CharactersAdmin";
 import ArtsAdmin from "../pages/admin/ArtworksAdmin";
 import CategAdmin from "../pages/admin/CategoriesAdmin";
+import CharacterModerationAdmin from "../pages/admin/CharacterModerationAdmin";
 import Rankings from "../pages/site/Ranking";
 import Characters from "../pages/site/Characters";
 import Artworks from "../pages/site/Artworks";
@@ -42,6 +43,10 @@ const AppRoutes = () => {
           <Route path="/admin/dashboard" element={<DashboardAdmin />} />
           <Route path="/admin/users" element={<UsersAdmin />} />
           <Route path="/admin/characters" element={<CharsAdmin />} />
+          <Route
+            path="/admin/moderation"
+            element={<CharacterModerationAdmin />}
+          />
           <Route path="/admin/artworks" element={<ArtsAdmin />} />
           <Route path="/admin/categories" element={<CategAdmin />} />
         </Route>

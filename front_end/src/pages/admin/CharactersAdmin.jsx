@@ -10,6 +10,7 @@ const CharsAdmin = () => {
   const [editChar, setEditChar] = useState(null);
   const [genders, setGenders] = useState([]);
   const [artworks, setArtworks] = useState([]);
+  const [pendingCount, setPendingCount] = useState(0);
 
   const fetchChars = async () => {
     try {
@@ -34,7 +35,7 @@ const CharsAdmin = () => {
     const fetchGendersAndArtworks = async () => {
       try {
         const [gRes, aRes] = await Promise.all([
-          fetch(`${import.meta.env.VITE_API_URL}/gender`),
+          fetch(`${import.meta.env.VITE_API_URL}/genders`),
           fetch(`${import.meta.env.VITE_API_URL}/artworks`),
         ]);
 
@@ -52,8 +53,23 @@ const CharsAdmin = () => {
       }
     };
 
+    const fetchPendingCount = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/admin/characters/pending`
+        );
+        if (res.ok) {
+          const data = await res.json();
+          setPendingCount(data.length);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     fetchChars();
     fetchGendersAndArtworks();
+    fetchPendingCount();
   }, []);
 
   const handleUpdateSuccess = () => {
@@ -84,6 +100,9 @@ const CharsAdmin = () => {
 
   if (loading) return <div>Chargement...</div>;
 
+  console.log("Données personnages:", characters); // Ici
+  console.log("Premier personnage:", characters[0]); // Pour voir la structure
+
   return (
     <main className="admin-main">
       <h3>Personnages</h3>
@@ -96,10 +115,35 @@ const CharsAdmin = () => {
           >
             Ajouter
           </button>
+
+          <Link to="/admin/moderation" className="link-button">
+            Modérer personnages
+            {pendingCount > 0 && <span className="badge">{pendingCount}</span>}
+          </Link>
+
           <div className="admin-cards">
+            {console.log(
+              "Personnages avec status:",
+              characters.map((c) => ({ name: c.name, status: c.status }))
+            )}
             {characters.map((char) => (
               <div className="admin-card" key={char.id}>
-                <p>- {char.name}</p>
+                <div className="char-header">
+                  {" "}
+                  <p>- {char.name}</p>
+                  {char.status === "pending" && (
+                    <span className="badge pending">En attente</span>
+                  )}
+                  {char.status === "approved" && (
+                    <span className="badge approved">Approuvé</span>
+                  )}
+                  {char.status === "rejected" && (
+                    <span className="badge rejected">Rejeté</span>
+                  )}
+                  {!char.status && (
+                    <span className="badge unknown">Statut inconnu</span>
+                  )}
+                </div>
                 <p>id : {char.id}</p>
                 <p>Genre : {char.id_gender}</p>
                 <p>Oeuvre : {char.id_artwork}</p>

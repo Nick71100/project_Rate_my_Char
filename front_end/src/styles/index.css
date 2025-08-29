@@ -327,6 +327,39 @@ form button:hover {
   padding: 15px 0;
   border-top: 1px solid #94dcfd;
 }
+.admin-main section .admin-cards .admin-card .badge {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.admin-main section .admin-cards .admin-card .badge.pending {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+.admin-main section .admin-cards .admin-card .badge.approved {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+.admin-main section .admin-cards .admin-card .badge.rejected {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+.admin-main section .admin-cards .admin-card .badge.unknown {
+  background: #e2e3e5;
+  color: #383d41;
+  border: 1px solid #d6d8db;
+}
+.admin-main section .admin-cards .admin-card .char-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 
 .detail {
   display: flex;
