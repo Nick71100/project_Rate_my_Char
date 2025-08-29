@@ -5,9 +5,6 @@ const CharacterModerationAdmin = () => {
   const [pendingCharacters, setPendingCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState({});
-  const [selectedChar, setSelectedChar] = useState(null);
-  const [rejectReason, setRejectReason] = useState("");
-  const [showRejectModal, setShowRejectModal] = useState(false);
 
   useEffect(() => {
     fetchPendingCharacters();
@@ -67,39 +64,30 @@ const CharacterModerationAdmin = () => {
     }
   };
 
-  const handleReject = (character) => {
-    setSelectedChar(character);
-    setShowRejectModal(true);
-  };
+  const handleReject = async (characterId) => {
+    const confirmReject = window.confirm(
+      "Êtes-vous sûr de vouloir rejeter ce personnage ?"
+    );
+    if (!confirmReject) return;
 
-  const confirmReject = async () => {
-    if (!selectedChar) return;
-
-    setProcessing((prev) => ({ ...prev, [selectedChar.id]: true }));
+    setProcessing((prev) => ({ ...prev, [characterId]: true }));
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/admin/characters/${
-          selectedChar.id
-        }/reject`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/admin/characters/${characterId}/reject`,
         {
           method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
           credentials: "include",
-          body: JSON.stringify({ reason: rejectReason }),
         }
       );
 
       if (response.ok) {
         toast.success("Personnage rejeté");
         setPendingCharacters((prev) =>
-          prev.filter((char) => char.id !== selectedChar.id)
+          prev.filter((char) => char.id !== characterId)
         );
-        setShowRejectModal(false);
-        setRejectReason("");
-        setSelectedChar(null);
       } else {
         const data = await response.json();
         toast.error(data.message || "Erreur lors du rejet");
@@ -108,7 +96,7 @@ const CharacterModerationAdmin = () => {
       console.error("Erreur:", error);
       toast.error("Erreur de connexion");
     } finally {
-      setProcessing((prev) => ({ ...prev, [selectedChar.id]: false }));
+      setProcessing((prev) => ({ ...prev, [characterId]: false }));
     }
   };
 
@@ -210,7 +198,7 @@ const CharacterModerationAdmin = () => {
 
                   <button
                     className="reject-btn"
-                    onClick={() => handleReject(char)}
+                    onClick={() => handleReject(char.id)}
                     disabled={processing[char.id]}
                   >
                     {processing[char.id] ? "..." : " Rejeter"}
@@ -218,48 +206,6 @@ const CharacterModerationAdmin = () => {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      )}
-
-      {showRejectModal && (
-        <div className="modal-backdrop">
-          <div className="modal">
-            <h3>Rejeter le personnage "{selectedChar?.name}"</h3>
-
-            <div className="form-group">
-              <label htmlFor="rejectReason">Raison du rejet (optionnel)</label>
-              <textarea
-                id="rejectReason"
-                value={rejectReason}
-                onChange={(e) => setRejectReason(e.target.value)}
-                placeholder="Expliquez pourquoi ce personnage est rejeté..."
-                rows="3"
-              />
-            </div>
-
-            <div className="modal-actions">
-              <button
-                className="confirm-btn reject"
-                onClick={confirmReject}
-                disabled={processing[selectedChar?.id]}
-              >
-                {processing[selectedChar?.id]
-                  ? "Rejet..."
-                  : "Confirmer le rejet"}
-              </button>
-              <button
-                className="cancel-btn"
-                onClick={() => {
-                  setShowRejectModal(false);
-                  setRejectReason("");
-                  setSelectedChar(null);
-                }}
-                disabled={processing[selectedChar?.id]}
-              >
-                Annuler
-              </button>
-            </div>
           </div>
         </div>
       )}
