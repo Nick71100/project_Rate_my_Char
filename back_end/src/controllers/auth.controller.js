@@ -72,7 +72,6 @@ const login = async (req, res) => {
 
   try {
     const user = await Users.findByPseudo(pseudo);
-    console.log(user);
     if (user) {
       const validPassword = await bcrypt.compare(password, user.password);
 
@@ -83,7 +82,6 @@ const login = async (req, res) => {
           role: user.role,
         };
         const authToken = generateToken(payload);
-        console.log(authToken);
         res.cookie("jwt", authToken, {
           httpOnly: true,
           secure: false,
