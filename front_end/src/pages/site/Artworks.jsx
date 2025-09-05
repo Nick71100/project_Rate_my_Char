@@ -8,9 +8,7 @@ function Artworks() {
   useEffect(() => {
     const fetchArts = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/artworks`, {
-          credentials: "include",
-        });
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/artworks`);
 
         if (res.ok) {
           const data = await res.json();
@@ -18,6 +16,7 @@ function Artworks() {
         }
       } catch (err) {
         console.log(err);
+        setError("Erreur lors du chargement des œuvres");
       } finally {
         setLoading(false);
       }
@@ -37,8 +36,15 @@ function Artworks() {
             <div className="card" key={art.id}>
               <Link to={`/artworks/${art.id}`}>
                 <h3>{art.title}</h3>
-                <img src={art.image_url} alt="image de l'oeuvre" />
+                <img
+                  src={art.image_url}
+                  alt={`Image de ${art.title}`}
+                  onError={(e) => {
+                    e.target.src = "/default-artwork.png";
+                  }}
+                />
                 <p>Auteur : {art.author}</p>
+                <p>Année : {art.product_year}</p>
               </Link>
             </div>
           ))}

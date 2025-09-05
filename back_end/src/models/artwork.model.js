@@ -28,11 +28,25 @@ class Artworks {
 
   static async getById(id) {
     try {
-      const [[result]] = await db.execute(
+      const [[artwork]] = await db.execute(
         "SELECT  * FROM artworks WHERE id = ?",
         [id]
       );
-      return result;
+      if (!artwork) return null;
+
+      const [categories] = await db.execute(
+        `
+      SELECT c.categorie
+      FROM categories c
+      INNER JOIN artworks_categories ac ON c.id = ac.category_id
+      WHERE ac.artwork_id = ?
+    `,
+        [id]
+      );
+
+      artwork.categories = categories.map((cat) => cat.categorie);
+
+      return artwork;
     } catch (error) {
       throw new Error("Erreur récupération oeuvre : " + error.message);
     }

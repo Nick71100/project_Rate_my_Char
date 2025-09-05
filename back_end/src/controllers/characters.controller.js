@@ -15,8 +15,8 @@ const createChar = async (req, res) => {
     const [result] = await Characters.create(
       name,
       short_desc,
-      long_desc,
-      image_url,
+      long_desc || "",
+      image_url || "",
       id_gender,
       id_artwork,
       id_user,
@@ -171,10 +171,14 @@ const getCharById = async (req, res) => {
   try {
     const { id } = req.params;
     const dataChar = await Characters.getById(id);
+    const votes = await Characters.getVotesByCriteria(id);
 
     if (!dataChar) {
       return res.status(404).json({ message: "Personnage non trouvé" });
     }
+
+    dataChar.votes = votes;
+
     res.status(200).json(dataChar);
   } catch (error) {
     console.error("Erreur de récupération du personnage :", error);

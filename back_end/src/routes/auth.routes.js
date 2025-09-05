@@ -1,25 +1,23 @@
 import { Router } from "express";
 import {
   createUser,
-  getCurrentUser,
   login,
   logout,
+  getCurrentUser,
   verifyEmail,
 } from "../controllers/auth.controller.js";
-import checkToken from "../middlewares/checkToken.js";
 import {
+  validateRegistration,
   validateLogin,
-  validateReg,
-  handleValidation,
 } from "../middlewares/validators/validate.user.middleware.js";
-import { loginLimiter } from "../utils/loginLimiter.js";
+import checkToken from "../middlewares/checkToken.js";
 
 const router = Router();
 
-router.post("/create", validateReg, handleValidation, createUser);
-router.post("/login", loginLimiter, validateLogin, handleValidation, login);
+router.post("/create", validateRegistration, createUser);
+router.post("/login", validateLogin, login);
 router.post("/logout", logout);
-router.get("/verify-email/:token", verifyEmail);
 router.get("/me", checkToken, getCurrentUser);
+router.get("/verify/:token", verifyEmail);
 
 export default router;

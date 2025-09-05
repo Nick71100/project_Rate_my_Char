@@ -29,17 +29,42 @@ const Register = () => {
 
     const toastId = toast.loading("Inscription en cours...");
 
+    if (form.password !== form.confirmPassword) {
+      seterror("Les mots de passe ne correspondent pas");
+      toast.dismiss(toastId);
+      return;
+    }
+
+    if (form.password.length < 8) {
+      seterror("Le mot de passe doit contenir au moins 8 caractères");
+      toast.dismiss(toastId);
+      return;
+    }
+
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          pseudo: form.pseudo,
+          email: form.email,
+          password: form.password,
+          id_gender: form.id_gender === 0 ? undefined : form.id_gender,
+        }),
       });
 
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.error || "Erreur d'inscription'");
+      if (!res.ok) {
+        if (data.errors && data.errors.length > 0) {
+          const errorMessages = data.errors
+            .map((err) => err.message)
+            .join(", ");
+          throw new Error(errorMessages);
+        }
+        throw new Error(data.message || "Erreur d'inscription");
+      }
 
       toast.success(`Vous ètes inscrit !`, {
         id: toastId,
@@ -104,9 +129,20 @@ const Register = () => {
           onChange={handleChange}
         />
         <p>
-          ( le mot de passe doit contenir au moins 6 caractères, avec au moins
-          un chiffre et un caractère spécial )
+          ( le mot de passe doit contenir au moins 8 caractères, avec au moins
+          une majuscule, une minuscule et un chiffre )
         </p>
+
+        <label htmlFor="confirmPassword">Confirmer le mot de passe</label>
+        <input
+          id="confirmPassword"
+          name="confirmPassword"
+          type="password"
+          required
+          placeholder="confirmez votre mot de passe"
+          value={form.confirmPassword}
+          onChange={handleChange}
+        />
 
         <label htmlFor="gender">Genre</label>
         <select

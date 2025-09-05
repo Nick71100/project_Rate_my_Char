@@ -8,9 +8,7 @@ function Characters() {
   useEffect(() => {
     const fetchChars = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/characters`, {
-          credentials: "include",
-        });
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/characters`);
 
         if (res.ok) {
           const data = await res.json();
@@ -37,9 +35,16 @@ function Characters() {
             <div className="card" key={char.id}>
               <Link to={`/characters/${char.id}`}>
                 <h3>{char.name}</h3>
-                <img src={char.image_url} alt="image du personnage" />
+                <img
+                  src={char.image_url}
+                  alt={`Image de ${char.name}`}
+                  onError={(e) => {
+                    e.target.src = "/default-character.png";
+                  }}
+                />
                 <p>{char.short_desc}</p>
-                <p>Oeuvre : {char.id_artwork}</p>
+                <p>Œuvre : {char.artwork_title || "Non spécifiée"}</p>
+                <p>Genre : {char.gender_label || "Non spécifié"}</p>
               </Link>
             </div>
           ))}

@@ -39,11 +39,23 @@ function CharDetail() {
         <h2>Détails du personnages</h2>
         <div className="detail" key={character.id}>
           <h3>{character.name}</h3>
-          <img src={character.image_url} alt="image du personnage" />
+          <img src={character.image_url} alt={`Image de ${character.name}`} />
           <p>{character.long_desc}</p>
-          <p>Oeuvre : {character.id_artwork}</p>
-          <p>Genre : {character.id_gender}</p>
-          <p>Ajouté par {character.id_user}</p>
+          <p>Œuvre : {character.artwork_title || "Non spécifiée"}</p>
+          <p>Genre : {character.gender_label || "Non spécifié"}</p>
+          <p>
+            Ajouté par : {character.creator_username || "Utilisateur supprimé"}
+          </p>
+          {character.votes && character.votes.length > 0 && (
+            <div className="votes-section">
+              <h4>Votes par critère :</h4>
+              {character.votes.map((vote) => (
+                <p key={vote.criteria_name}>
+                  {vote.criteria_name} : {vote.vote_count} vote(s)
+                </p>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </main>

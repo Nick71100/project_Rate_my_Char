@@ -12,36 +12,34 @@ const createUser = async (req, res) => {
   try {
     const user = await Users.findByPseudo(pseudo);
 
-    if (!user) {
-      const hash = await bcrypt.hash(password, saltRounds);
-      const [result] = await Users.create(pseudo, hash, email, id_gender);
-      const emailToken = generateToken({
-        email,
-        purpose: "email_verification",
+    if (user) {
+      return res.status(409).json({ message: "Pseudo déjà utilisé." });
+    }
+
+    const hash = await bcrypt.hash(password, saltRounds);
+    const [result] = await Users.create(pseudo, hash, email, id_gender);
+
+    const emailToken = generateToken({
+      email,
+      purpose: "email_verification",
+    });
+
+    const responseEmailSent = await sendEmailConfirmation(email, emailToken);
+
+    if (responseEmailSent.error) {
+      await Users.deleteById(result.insertId);
+      return res.status(500).json({
+        error: "Échec lors de l'envoi de l'email de confirmation.",
       });
-
-      const responseEmailSent = await sendEmailConfirmation(email, emailToken);
-
-      if (responseEmailSent.error) {
-        await Users.deleteById(response.insertId);
-
-        return res.status(500).json({
-          error: "Échec lors de l'envoi de l'email de confirmation.",
-          error: responseEmailSent.error.message,
-        });
-      }
-      res
-        .status(201)
-        .json({ message: "Utilisateur créé", id: result.insertId });
-      return;
     }
-    res.status(409).json({ message: "Pseudo déjà utilisé." });
+
+    res.status(201).json({
+      message: "Utilisateur créé",
+      id: result.insertId,
+    });
   } catch (error) {
-    if (error.message.includes("Duplicate entry")) {
-      console.log(error.message);
-      res.status(409).json({ message: "Pseudo déjà utilisé." });
-    }
-    res.status(500).json({ error: error.message });
+    console.error("Erreur création utilisateur :", error);
+    res.status(500).json({ error: "Erreur serveur lors de la création." });
   }
 };
 
@@ -122,6 +120,10 @@ const logout = (req, res) => {
 };
 
 const getCurrentUser = (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ message: "Non authentifié" });
+  }
+
   const { pseudo, id_role } = req.user;
   res.json({ user: { pseudo, id_role } });
 };

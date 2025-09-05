@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 function ArtDetail() {
-  const [artwork, setArtwork] = useState([]);
+  const [artwork, setArtwork] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
@@ -31,7 +31,7 @@ function ArtDetail() {
   }, [id]);
 
   if (loading) return <div>Chargement...</div>;
-  if (!artwork) return <div>Personnage non trouvé.</div>;
+  if (!artwork) return <div>Œuvre non trouvé.</div>;
 
   return (
     <main>
@@ -41,7 +41,11 @@ function ArtDetail() {
           <h3>{artwork.title}</h3>
           <img src={artwork.image_url} alt="image de l'oeuvre" />
           <p>{artwork.description}</p>
-          <p>Catégorie : {artwork.id_categorie}</p>
+          {artwork.categories && artwork.categories.length > 0 ? (
+            <p>Catégories : {artwork.categories.join(", ")}</p>
+          ) : (
+            <p>Catégories : Non spécifiées</p>
+          )}
           <p>Auteur : {artwork.author}</p>
           <p>Année de publication : {artwork.product_year}</p>
         </div>

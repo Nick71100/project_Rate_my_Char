@@ -14,10 +14,9 @@ const AddCharacterModal = ({
   const [idGender, setIdGender] = useState("");
   const [idArtwork, setIdArtwork] = useState(defaultArtworkId);
   const [loading, setLoading] = useState(false);
-
   const [genders, setGenders] = useState([]);
   const [artworks, setArtworks] = useState([]);
-  const authState = useSelector((state) => state.auth);
+  const [error, setError] = useState("");
   const user = useSelector((state) => state.auth.user);
   const userId = user?.id;
 
@@ -62,15 +61,18 @@ const AddCharacterModal = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     if (!name.trim()) {
       toast.warning("Le nom du personnage est requis.");
       return;
     }
+
     if (!shortDesc.trim()) {
       toast.warning("La description courte est requise.");
       return;
     }
+
     if (!idGender) {
       toast.warning("Veuillez sélectionner un genre.");
       return;
@@ -88,7 +90,7 @@ const AddCharacterModal = ({
         name: name.trim(),
         short_desc: shortDesc.trim(),
         long_desc: longDesc.trim() || "",
-        image_url: imageUrl.trim() || "",
+        image_url: imageUrl.trim() || null,
         id_gender: parseInt(idGender),
         id_artwork: parseInt(idArtwork),
         id_user: userId,
@@ -110,6 +112,13 @@ const AddCharacterModal = ({
 
       if (!response.ok) {
         const data = await response.json();
+
+        if (data.errors && data.errors.length > 0) {
+          const errorMessages = data.errors
+            .map((err) => err.message)
+            .join(", ");
+          throw new Error(errorMessages);
+        }
         throw new Error(
           data?.message || "Erreur lors de l'ajout du personnage."
         );
@@ -131,6 +140,7 @@ const AddCharacterModal = ({
       });
     } catch (error) {
       console.error("Erreur:", error);
+      setError(error.message);
       toast.error(error.message || "Ajout de personnage échoué !", {
         id: toastId,
         style: {
@@ -147,6 +157,9 @@ const AddCharacterModal = ({
     <div className="modal-backdrop">
       <div className="modal">
         <h2>Proposer un nouveau personnage</h2>
+
+        {error && <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>}
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">
@@ -197,13 +210,14 @@ const AddCharacterModal = ({
           <div className="form-group">
             <label htmlFor="imageUrl">URL de l'image (optionnel)</label>
             <input
-              type="url"
+              type="text"
               id="imageUrl"
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
               placeholder="https://example.com/image.jpg"
               disabled={loading}
             />
+            <small>URL complète (doit commencer par http:// ou https://)</small>
           </div>
 
           <div className="form-group">
@@ -272,7 +286,10 @@ const AddCharacterModal = ({
             </button>
             <button
               type="button"
-              onClick={onCancel}
+              onClick={() => {
+                setError("");
+                onCancel();
+              }}
               className="cancel-btn"
               disabled={loading}
             >
