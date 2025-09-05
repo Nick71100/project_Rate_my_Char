@@ -184,6 +184,9 @@ class Characters {
   }
 
   static async getById(id) {
+    if (!id || isNaN(id)) {
+      throw new Error("ID invalide");
+    }
     try {
       const [[result]] = await db.execute(
         `
@@ -247,23 +250,42 @@ class Characters {
     }
   }
 
-  static async getVotesByCriteria(characterId) {
+  static async getTopByCriteria() {
     try {
-      const [rows] = await db.execute(
-        `
-      SELECT 
-        c.label as criteria_name,
+      const query = `
+        SELECT 
+        c.id,
+        c.name,
+        c.image_url,
+        c.short_desc,
+        a.title as artwork_title,
+        cr.label as criteria_name,
         COUNT(v.id) as vote_count
-      FROM criterias c
-      LEFT JOIN votes v ON c.id = v.id_criteria AND v.id_character = ?
-      GROUP BY c.id, c.label
-      ORDER BY c.label
-    `,
-        [characterId]
-      );
-      return rows;
+      FROM characters c
+      LEFT JOIN artworks a ON c.id_artwork = a.id
+      LEFT JOIN votes v ON c.id = v.id_character
+      LEFT JOIN criterias cr ON v.id_criteria = cr.id
+      WHERE v.id_criteria IS NOT NULL
+      GROUP BY c.id, cr.id
+      HAVING vote_count > 0
+      ORDER BY cr.id, vote_count DESC
+    `;
+
+      const [rows] = await db.execute(query);
+
+      const topCharacters = [];
+      const criteriaMap = new Map();
+
+      rows.forEach((row) => {
+        if (!criteriaMap.has(row.criteria_name)) {
+          criteriaMap.set(row.criteria_name, row);
+          topCharacters.push(row);
+        }
+      });
+
+      return topCharacters;
     } catch (error) {
-      throw new Error("Erreur récupération votes: " + error.message);
+      throw new Error("Erreur récupération top personnages : " + error.message);
     }
   }
 

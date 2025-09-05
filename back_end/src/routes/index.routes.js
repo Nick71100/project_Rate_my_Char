@@ -11,7 +11,6 @@ import categorieRouter from "./categorie.routes.js";
 import adminRouter from "./admin.routes.js";
 import voteRouter from "./votes.routes.js";
 import criteriaRouter from "./criteria.routes.js";
-import artworkCategorieRoutes from "./artworkCategorie.routes.js";
 
 const router = Router();
 
@@ -24,6 +23,5 @@ router.use("/categories", categorieRouter);
 router.use("/admin", checkToken, checkRole(1), adminRouter);
 router.use("/votes", voteRouter);
 router.use("/criteria", criteriaRouter);
-router.use("/api/artwork-categories", artworkCategorieRoutes);
 
 export default router;

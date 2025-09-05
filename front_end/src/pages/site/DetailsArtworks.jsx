@@ -41,11 +41,22 @@ function ArtDetail() {
           <h3>{artwork.title}</h3>
           <img src={artwork.image_url} alt="image de l'oeuvre" />
           <p>{artwork.description}</p>
-          {artwork.categories && artwork.categories.length > 0 ? (
-            <p>Catégories : {artwork.categories.join(", ")}</p>
-          ) : (
-            <p>Catégories : Non spécifiées</p>
-          )}
+
+          <div className="categories-section">
+            <span>Catégories : </span>
+            {artwork.categories && artwork.categories.length > 0 ? (
+              <div className="categories-list">
+                {artwork.categories.map((cat) => (
+                  <span key={cat.id} className="category-badge">
+                    {cat.categorie}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <span className="no-categories">Non spécifiées</span>
+            )}
+          </div>
+
           <p>Auteur : {artwork.author}</p>
           <p>Année de publication : {artwork.product_year}</p>
         </div>

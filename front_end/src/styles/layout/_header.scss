@@ -1,0 +1,111 @@
+header {
+  @include flex-center(row);
+  justify-content: space-evenly;
+  height: 80px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid $border-color;
+
+  .title {
+    display: flex;
+    align-items: flex-end;
+
+    .logo {
+      width: 70px;
+    }
+
+    h1 {
+      color: $color-primary;
+      font-size: $font-size-h1;
+    }
+  }
+
+  .menu-hamburger {
+    display: block;
+
+    i {
+      font-size: $font-size-nav-mobile;
+      cursor: pointer;
+      color: $color-primary;
+    }
+
+    @include tablet {
+      display: none;
+    }
+  }
+
+  .nav-links {
+    @include mobile-nav;
+
+    ul {
+      @include flex-column(center);
+      width: 100vw;
+      height: 100vh;
+      justify-content: space-around;
+      padding: $spacing-md 0;
+      margin: 0;
+      list-style: none;
+
+      li a {
+        color: $color-primary;
+        text-decoration: none;
+        font-size: $font-size-nav-mobile;
+
+        &:hover {
+          border-bottom: 2px solid $color-primary;
+        }
+      }
+    }
+
+    @include tablet {
+      position: relative;
+      top: 0;
+      transform: none;
+      background: none;
+      backdrop-filter: none;
+
+      ul {
+        flex-direction: row;
+        width: auto;
+        height: auto;
+        gap: $spacing-xl;
+
+        li a {
+          font-size: $font-size-nav;
+        }
+
+        .log-btn {
+          display: block;
+        }
+
+        .log-link {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .log-link {
+    display: block;
+
+    @include tablet {
+      display: none;
+    }
+  }
+
+  .log-btn {
+    display: none;
+    color: $color-primary;
+
+    i {
+      font-size: $font-size-nav-mobile;
+    }
+
+    @include tablet {
+      display: block;
+    }
+  }
+
+  @include tablet {
+    justify-content: space-evenly;
+  }
+}

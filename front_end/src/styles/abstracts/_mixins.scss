@@ -1,0 +1,259 @@
+@import "variables";
+
+@mixin tablet {
+  @media screen and (min-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $breakpoint-desktop) {
+    @content;
+  }
+}
+
+@mixin mobile-only {
+  @media screen and (max-width: #{$breakpoint-tablet - 1px}) {
+    @content;
+  }
+}
+
+@mixin flex-center($direction: row, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
+  @if $gap > 0 {
+    gap: $gap;
+  }
+}
+
+@mixin flex-between($align: center, $gap: 0) {
+  display: flex;
+  justify-content: space-between;
+  align-items: $align;
+  @if $gap > 0 {
+    gap: $gap;
+  }
+}
+
+@mixin flex-column($align: stretch, $gap: 0) {
+  display: flex;
+  flex-direction: column;
+  align-items: $align;
+  @if $gap > 0 {
+    gap: $gap;
+  }
+}
+
+@mixin button-base($padding: $padding-button) {
+  padding: $padding;
+  border: none;
+  border-radius: $border-radius-small;
+  cursor: pointer;
+  transition: all $transition-fast;
+  font-weight: 500;
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+@mixin button-primary($bg: $color-primary, $color: $color-background) {
+  @include button-base;
+  background-color: $bg;
+  color: $color;
+  border: 1px solid $bg;
+
+  &:hover {
+    background-color: $color;
+    color: $bg;
+  }
+}
+
+@mixin button-secondary($bg: $color-white, $color: $color-secondary) {
+  @include button-base;
+  background-color: $bg;
+  color: $color;
+  border: 1px solid $color;
+  font-weight: bold;
+
+  &:hover {
+    background-color: $color;
+    color: $bg;
+  }
+}
+
+@mixin button-danger($bg: crimson, $color: white) {
+  @include button-base;
+  background-color: $bg;
+  color: $color;
+}
+
+@mixin button-neutral($bg: gray, $color: white) {
+  @include button-base;
+  background-color: $bg;
+  color: $color;
+}
+
+@mixin badge-base($padding: $padding-badge, $radius: $border-radius-round) {
+  padding: $padding;
+  border-radius: $radius;
+  font-size: $font-size-badge-small;
+  font-weight: 500;
+  transition: all $transition-fast;
+  display: inline-block;
+}
+
+@mixin category-badge($bg: #3498db, $color: white, $hover-bg: #2980b9) {
+  @include badge-base;
+  background-color: $bg;
+  color: $color;
+
+  &:hover {
+    background-color: $hover-bg;
+  }
+}
+
+@mixin gender-badge($bg, $color, $hover-bg: null, $border: null) {
+  @include badge-base;
+  background-color: $bg;
+  color: $color;
+  border: 2px solid transparent;
+
+  @if $border {
+    border-color: $border;
+  }
+
+  &:hover {
+    @if $hover-bg {
+      background-color: $hover-bg;
+    }
+    transform: scale(1.05);
+  }
+}
+
+@mixin admin-badge($bg, $color, $border) {
+  font-size: $font-size-badge;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: $bg;
+  color: $color;
+  border: 1px solid $border;
+}
+
+@mixin card-base($padding: $padding-card, $border: true) {
+  padding: $padding;
+  border-radius: $border-radius-medium;
+
+  @if $border {
+    border: 1px solid $border-color;
+  }
+}
+
+@mixin character-card {
+  @include card-base;
+  width: 90%;
+
+  a {
+    @include flex-column;
+
+    h3 {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    p {
+      margin: 10px 0;
+      text-align: left;
+    }
+
+    img {
+      width: 90%;
+      height: auto;
+      align-self: center;
+      border: 1px solid $border-color;
+      border-radius: $border-radius-small;
+    }
+  }
+
+  @include tablet {
+    width: 45%;
+  }
+
+  @include desktop {
+    width: 22%;
+
+    a img {
+      width: auto;
+      height: 160px;
+    }
+  }
+}
+
+@mixin admin-card {
+  @include flex-between($gap: 10px);
+  padding: 15px 0;
+  border-top: 1px solid $border-color;
+}
+
+@mixin section-divider($color: $border-color, $padding: $padding-section) {
+  margin-top: 20px;
+  padding: $padding;
+  border-top: 1px solid $color;
+}
+
+@mixin list-divider($color: $border-color, $padding: 10px 0) {
+  padding: $padding;
+  border-top: 1px solid $color;
+
+  &:last-child {
+    border-bottom: 1px solid $color;
+  }
+}
+
+@mixin responsive-image($max-width: 90%, $border: true) {
+  width: $max-width;
+  height: auto;
+
+  @if $border {
+    border: 1px solid $border-color;
+    border-radius: $border-radius-large;
+  }
+}
+
+@mixin modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  @include flex-center;
+  z-index: $z-modal;
+}
+
+@mixin modal-content($max-width: 400px) {
+  background: $color-white;
+  padding: $spacing-xl;
+  border-radius: $border-radius-medium;
+  text-align: center;
+  max-width: $max-width;
+}
+
+@mixin mobile-nav {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  background-color: rgba(121, 108, 108, 0.432);
+  backdrop-filter: blur(7px);
+  transform: translateY(-200%);
+  transition: transform $transition-medium;
+  z-index: $z-nav-mobile;
+
+  &.mobile-menu {
+    transform: translateY(0);
+  }
+}

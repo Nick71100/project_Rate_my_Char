@@ -2,8 +2,6 @@ import Users from "../models/user.model.js";
 import Characters from "../models/characters.model.js";
 import Artwork from "../models/artwork.model.js";
 
-new Promise((resolve, reject) => {});
-
 const getStats = async (req, res) => {
   try {
     const [users, characters, artworks] = await Promise.all([

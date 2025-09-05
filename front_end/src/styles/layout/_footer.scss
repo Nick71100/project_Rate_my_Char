@@ -1,0 +1,12 @@
+footer {
+  width: 100%;
+  @include flex-center;
+  margin-top: 20px;
+  padding: 30px;
+  color: $color-primary;
+  border-top: 1px solid $border-color;
+
+  p {
+    text-align: center;
+  }
+}

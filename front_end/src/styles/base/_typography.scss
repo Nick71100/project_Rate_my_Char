@@ -1,0 +1,189 @@
+body {
+  font-size: $font-size-base;
+  font-family: $font-primary;
+  line-height: 1.6;
+  color: $color-text-light;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-heading;
+  color: $color-secondary;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+
+  text-rendering: optimizeLegibility;
+}
+
+h1 {
+  font-size: $font-size-h1;
+
+  header .title & {
+    color: $color-primary;
+    margin-bottom: 0;
+  }
+}
+
+h2 {
+  font-size: $font-size-h2;
+
+  main & {
+    margin-bottom: 20px;
+    text-align: center;
+    color: $color-secondary;
+  }
+}
+
+h3 {
+  font-size: 1.5rem;
+
+  .card &,
+  .detail & {
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .admin-main &,
+  .user-dashboard & {
+    text-align: center;
+  }
+}
+
+h4 {
+  font-size: 1.25rem;
+
+  .admin-main & {
+    text-align: center;
+  }
+}
+
+p {
+  margin-bottom: 1rem;
+  color: $color-primary;
+
+  main & {
+    text-align: center;
+  }
+
+  .card & {
+    margin: 10px 0;
+    text-align: left;
+  }
+
+  form & {
+    font-size: $font-size-small;
+    text-align: center;
+  }
+
+  footer & {
+    text-align: center;
+    margin-bottom: 0;
+  }
+}
+
+span {
+  color: $color-primary;
+}
+
+em {
+  font-style: italic;
+
+  .vote & {
+    font-size: $font-size-h2;
+    font-family: $font-heading;
+  }
+}
+
+.reg-link {
+  text-decoration: underline;
+  color: $color-secondary;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+ul,
+ol {
+  margin-bottom: 1rem;
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+}
+
+@include mobile-only {
+  h1 {
+    font-size: calc(#{$font-size-h1} * 0.9);
+  }
+
+  h2 {
+    font-size: calc(#{$font-size-h2} * 0.9);
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  .nav-links ul li a {
+    font-size: $font-size-nav-mobile;
+  }
+}
+
+@include tablet {
+  .nav-links ul li a {
+    font-size: $font-size-nav;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.text-primary {
+  color: $color-primary;
+}
+
+.text-secondary {
+  color: $color-secondary;
+}
+
+.text-white {
+  color: $color-white;
+}
+
+.text-small {
+  font-size: $font-size-small;
+}
+
+.text-large {
+  font-size: 1.25rem;
+}
+
+.text-xl {
+  font-size: 1.5rem;
+}

@@ -29,3 +29,20 @@ export const fetchVotes = async () => {
   if (!res.ok) throw new Error("Erreur lors de la récupération des votes");
   return await res.json();
 };
+
+export const fetchTopCharacters = async () => {
+  try {
+    const res = await fetch(`${API_URL}/characters/top-by-criteria`, {
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      throw new Error(`Erreur HTTP: ${res.status}`);
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Erreur récupération top personnages:", error);
+    return [];
+  }
+};

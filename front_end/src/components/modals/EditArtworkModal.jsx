@@ -14,11 +14,20 @@ const EditArtworkModal = ({ artwork, onCancel, onEditSuccess }) => {
     const fetchCategories = async () => {
       try {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/categories`);
+        if (!res.ok) {
+          throw new Error(`Erreur HTTP: ${res.status}`);
+        }
         const data = await res.json();
         setCategories(data);
-        setSelectedCategories(artwork.categories.map((cat) => cat.id));
+
+        if (artwork.categories && Array.isArray(artwork.categories)) {
+          setSelectedCategories(artwork.categories.map((cat) => cat.id));
+        } else {
+          setSelectedCategories([]);
+        }
       } catch (err) {
         console.error("Erreur récupération catégories :", err);
+        toast.error("Impossible de charger les catégories");
       }
     };
 
@@ -27,6 +36,12 @@ const EditArtworkModal = ({ artwork, onCancel, onEditSuccess }) => {
 
   const handleCategoryChange = (e) => {
     const value = parseInt(e.target.value, 10);
+
+    if (isNaN(value)) {
+      console.error("Valeur de catégorie invalide:", e.target.value);
+      return;
+    }
+
     if (e.target.checked) {
       setSelectedCategories((prev) => [...prev, value]);
     } else {
@@ -36,6 +51,11 @@ const EditArtworkModal = ({ artwork, onCancel, onEditSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!title.trim()) {
+      toast.error("Le titre est obligatoire");
+      return;
+    }
 
     const toastId = toast.loading("Modification en cours...");
 
@@ -47,11 +67,11 @@ const EditArtworkModal = ({ artwork, onCancel, onEditSuccess }) => {
           headers: { "Content-Type": "application/json" },
           credentials: "include",
           body: JSON.stringify({
-            title,
-            author,
-            product_year,
-            image_url,
-            description,
+            title: title.trim(),
+            author: author.trim(),
+            product_year: product_year ? parseInt(product_year, 10) : null,
+            image_url: image_url.trim(),
+            description: description.trim(),
             categories: selectedCategories,
           }),
         }
@@ -59,13 +79,11 @@ const EditArtworkModal = ({ artwork, onCancel, onEditSuccess }) => {
 
       if (!res.ok) {
         const errorData = await res.json();
-        throw new Error(
-          errorData?.message || "Erreur lors de la modification."
-        );
+        throw new Error(errorData?.message || `Erreur HTTP: ${res.status}`);
       }
 
       const updatedArtwork = await res.json();
-      toast.success(`Oeuvre modifiée avec succès !`, {
+      toast.success(`Œuvre modifiée avec succès !`, {
         id: toastId,
         style: {
           background: "#27ae60",
@@ -74,8 +92,8 @@ const EditArtworkModal = ({ artwork, onCancel, onEditSuccess }) => {
       });
       onEditSuccess(updatedArtwork);
     } catch (err) {
-      console.error(err);
-      toast.error("Echec de la modifictaion !", {
+      console.error("Erreur modification artwork:", err);
+      toast.error("Échec de la modification !", {
         id: toastId,
         style: {
           background: "red",
@@ -91,8 +109,12 @@ const EditArtworkModal = ({ artwork, onCancel, onEditSuccess }) => {
         <h2>Modifier l'œuvre</h2>
         <form onSubmit={handleSubmit}>
           <label>
-            Titre :
-            <input value={title} onChange={(e) => setTitle(e.target.value)} />
+            Titre * :
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
           </label>
           <label>
             Auteur :
@@ -101,8 +123,10 @@ const EditArtworkModal = ({ artwork, onCancel, onEditSuccess }) => {
           <label>
             URL de l'image :
             <input
+              type="url"
               value={image_url}
               onChange={(e) => setImageUrl(e.target.value)}
+              placeholder="https://exemple.com/image.jpg"
             />
           </label>
           <label>
@@ -111,21 +135,26 @@ const EditArtworkModal = ({ artwork, onCancel, onEditSuccess }) => {
               name="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              rows="4"
             />
           </label>
           <fieldset>
             <legend>Catégories :</legend>
-            {categories.map((cat) => (
-              <label key={cat.id}>
-                <input
-                  type="checkbox"
-                  value={cat.id}
-                  checked={selectedCategories.includes(cat.id)}
-                  onChange={handleCategoryChange}
-                />
-                {cat.categorie}
-              </label>
-            ))}
+            {categories.length > 0 ? (
+              categories.map((cat) => (
+                <label key={cat.id} className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    value={cat.id}
+                    checked={selectedCategories.includes(cat.id)}
+                    onChange={handleCategoryChange}
+                  />
+                  {cat.categorie || cat.name}
+                </label>
+              ))
+            ) : (
+              <p>Aucune catégorie disponible</p>
+            )}
           </fieldset>
           <label>
             Année :
@@ -133,6 +162,8 @@ const EditArtworkModal = ({ artwork, onCancel, onEditSuccess }) => {
               type="number"
               value={product_year}
               onChange={(e) => setProductYear(e.target.value)}
+              min="1000"
+              max="2030"
             />
           </label>
           <div className="modal-actions">

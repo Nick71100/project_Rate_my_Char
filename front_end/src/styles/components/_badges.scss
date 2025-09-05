@@ -1,0 +1,68 @@
+.category-badge {
+  @include category-badge;
+}
+
+.no-categories {
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+.gender-badge {
+  @include badge-base;
+  border: 2px solid transparent;
+}
+
+.gender-male {
+  @include gender-badge($gender-male, white, $gender-male-hover);
+}
+
+.gender-female {
+  @include gender-badge($gender-female, white, $gender-female-hover);
+}
+
+.gender-other {
+  @include gender-badge($gender-other, #2c3e50, $gender-other-hover);
+}
+
+.gender-unspecified {
+  @include gender-badge(
+    $gender-unspecified,
+    #2c3e50,
+    $gender-unspecified-hover,
+    $gender-unspecified-border
+  );
+}
+
+.admin-cards .admin-card .badge {
+  &.pending {
+    @include admin-badge(
+      $badge-pending-bg,
+      $badge-pending-color,
+      $badge-pending-border
+    );
+  }
+
+  &.approved {
+    @include admin-badge(
+      $badge-approved-bg,
+      $badge-approved-color,
+      $badge-approved-border
+    );
+  }
+
+  &.rejected {
+    @include admin-badge(
+      $badge-rejected-bg,
+      $badge-rejected-color,
+      $badge-rejected-border
+    );
+  }
+
+  &.unknown {
+    @include admin-badge(
+      $badge-unknown-bg,
+      $badge-unknown-color,
+      $badge-unknown-border
+    );
+  }
+}

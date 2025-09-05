@@ -1,0 +1,22 @@
+.cards {
+  @include flex-center($gap: 20px);
+  flex-wrap: wrap;
+  padding: $padding-section;
+
+  .card {
+    @include character-card;
+  }
+}
+
+.admin-cards {
+  @include flex-column;
+
+  .admin-card {
+    @include admin-card;
+
+    .char-header {
+      @include flex-center(row, 0.5rem);
+      margin-bottom: 0.5rem;
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import Characters from "../models/characters.model.js";
+import Votes from "../models/votes.model.js";
 
 const createChar = async (req, res) => {
   const { name, short_desc, long_desc, image_url, id_gender, id_artwork } =
@@ -171,7 +172,7 @@ const getCharById = async (req, res) => {
   try {
     const { id } = req.params;
     const dataChar = await Characters.getById(id);
-    const votes = await Characters.getVotesByCriteria(id);
+    const votes = await Votes.getVoteStatsByCharacter(id);
 
     if (!dataChar) {
       return res.status(404).json({ message: "Personnage non trouvé" });
@@ -186,6 +187,24 @@ const getCharById = async (req, res) => {
   }
 };
 
+const getTopCharactersByCriteria = async (req, res) => {
+  try {
+    const topCharacters = await Characters.getTopByCriteria();
+
+    if (topCharacters.length === 0) {
+      return res.json([]);
+    }
+
+    res.status(200).json(topCharacters);
+  } catch (error) {
+    console.error("Erreur récupération top personnages:", error);
+    res.status(500).json({
+      error: "Erreur serveur lors de la récupération des leaders",
+      message: error.message,
+    });
+  }
+};
+
 export {
   getAllChars,
   createChar,
@@ -196,4 +215,5 @@ export {
   approveChar,
   rejectChar,
   getAllCharsAdmin,
+  getTopCharactersByCriteria,
 };

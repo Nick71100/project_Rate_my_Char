@@ -1,0 +1,12 @@
+.modal-backdrop {
+  @include modal-backdrop;
+}
+
+.modal {
+  @include modal-content;
+}
+
+.modal-buttons {
+  margin-top: $spacing-lg;
+  @include flex-center(row, 2rem);
+}

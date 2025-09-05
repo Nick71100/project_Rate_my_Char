@@ -1,0 +1,277 @@
+.user-dashboard {
+  padding: $spacing-lg;
+
+  h3 {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+    color: $color-secondary;
+  }
+
+  .user-stats,
+  .account {
+    margin-bottom: $spacing-xl;
+
+    h4 {
+      text-align: center;
+      margin-bottom: $spacing-lg;
+      color: $color-secondary;
+      font-family: $font-heading;
+    }
+
+    div {
+      @include admin-card;
+
+      .label {
+        font-weight: 500;
+        color: $color-secondary;
+      }
+
+      .value {
+        color: $color-primary;
+        font-weight: 600;
+      }
+
+      input {
+        background: transparent;
+        border: 1px solid rgba($border-color, 0.5);
+        border-radius: $border-radius-small;
+        padding: 0.4rem 0.8rem;
+        color: $color-primary;
+        font-size: $font-size-small;
+
+        &:focus {
+          outline: 2px solid $color-primary;
+          outline-offset: 2px;
+          border-color: $color-primary;
+        }
+      }
+    }
+  }
+
+  .change-password {
+    margin: $spacing-xl 0;
+    padding: $spacing-lg;
+    background: rgba($color-secondary, 0.05);
+    border-radius: $border-radius-medium;
+    border: 1px solid rgba($border-color, 0.3);
+
+    h4 {
+      text-align: center;
+      margin-bottom: $spacing-lg;
+      color: $color-secondary;
+    }
+
+    .password-form {
+      @include flex-column(center, $spacing-md);
+
+      .form-group {
+        width: 100%;
+        max-width: 400px;
+
+        label {
+          display: block;
+          margin-bottom: $spacing-xs;
+          color: $color-secondary;
+          font-weight: 500;
+        }
+
+        input[type="password"] {
+          width: 100%;
+          padding: $spacing-sm $spacing-md;
+          border: 1px solid rgba($border-color, 0.5);
+          border-radius: $border-radius-small;
+          background: $color-background;
+          color: $color-primary;
+
+          &:focus {
+            outline: 2px solid $color-primary;
+            outline-offset: 2px;
+            border-color: $color-primary;
+          }
+
+          &::placeholder {
+            color: rgba($color-primary, 0.5);
+          }
+        }
+      }
+
+      .password-actions {
+        @include flex-center(row, $spacing-md);
+        margin-top: $spacing-md;
+
+        .btn-save-password {
+          @include button-primary;
+        }
+
+        .btn-cancel-password {
+          @include button-secondary;
+        }
+
+        @include mobile-only {
+          flex-direction: column;
+          width: 100%;
+
+          button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .account-btns {
+    @include flex-column(center, $spacing-md);
+    margin-top: $spacing-xl;
+
+    .btn-edit-profile {
+      @include button-secondary;
+      padding: $spacing-sm $spacing-lg;
+    }
+
+    .btn-delete-account {
+      @include button-danger;
+      padding: $spacing-sm $spacing-lg;
+    }
+
+    .btn-logout {
+      @include button-primary;
+      background-color: transparent;
+      color: $color-primary;
+      border: 1px solid $color-primary;
+      padding: $spacing-sm $spacing-lg;
+
+      &:hover {
+        background-color: $color-primary;
+        color: $color-background;
+      }
+    }
+
+    @include tablet {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  .vote-history {
+    margin-top: $spacing-xl;
+
+    h4 {
+      text-align: center;
+      margin-bottom: $spacing-lg;
+      color: $color-secondary;
+    }
+
+    .vote-list {
+      .vote-item {
+        @include admin-card;
+        background: rgba($color-primary, 0.02);
+        border-radius: $border-radius-small;
+        margin-bottom: $spacing-sm;
+        transition: all $transition-fast;
+
+        &:hover {
+          background: rgba($color-primary, 0.05);
+          transform: translateX(5px);
+        }
+
+        .vote-details {
+          @include flex-column(flex-start);
+          flex: 1;
+
+          .character-name {
+            font-weight: 600;
+            color: $color-secondary;
+            margin-bottom: $spacing-xs;
+          }
+
+          .criteria-name {
+            font-size: $font-size-small;
+            color: $color-primary;
+            opacity: 0.8;
+          }
+        }
+
+        .vote-date {
+          font-size: $font-size-small;
+          color: $color-secondary;
+          opacity: 0.6;
+        }
+      }
+
+      .empty-votes {
+        text-align: center;
+        padding: $spacing-xl;
+        color: $color-secondary;
+        opacity: 0.7;
+
+        .empty-icon {
+          font-size: 2rem;
+          margin-bottom: $spacing-md;
+        }
+
+        .empty-message {
+          font-size: $font-size-small;
+          line-height: 1.6;
+        }
+      }
+    }
+  }
+
+  .user-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $spacing-lg;
+    margin: $spacing-xl 0;
+
+    .stat-card {
+      @include card-base;
+      text-align: center;
+      padding: $spacing-lg;
+      background: rgba($color-primary, 0.03);
+      transition: all $transition-fast;
+
+      &:hover {
+        background: rgba($color-primary, 0.08);
+        transform: translateY(-2px);
+      }
+
+      .stat-icon {
+        font-size: 2rem;
+        margin-bottom: $spacing-sm;
+        color: $color-primary;
+      }
+
+      .stat-number {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: $color-primary;
+        font-family: $font-heading;
+        margin-bottom: $spacing-xs;
+      }
+
+      .stat-label {
+        font-size: $font-size-small;
+        color: $color-secondary;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    @include mobile-only {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @include mobile-only {
+    padding: $spacing-md;
+
+    .user-stats,
+    .account {
+      div {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: $spacing-xs;
+      }
+    }
+  }
+}

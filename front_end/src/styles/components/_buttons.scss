@@ -1,0 +1,19 @@
+.vote button {
+  @include button-primary;
+  margin: 20px auto;
+  padding: 5px 15px;
+}
+
+form button {
+  @include button-secondary;
+  margin: 20px 0;
+  padding: 10px 20px;
+}
+
+.confirm-btn {
+  @include button-danger;
+}
+
+.cancel-btn {
+  @include button-neutral;
+}

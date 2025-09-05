@@ -1,0 +1,244 @@
+.admin-main {
+  h3,
+  h4 {
+    text-align: center;
+  }
+
+  section {
+    border: none;
+
+    .admin-stats {
+      margin-top: 20px;
+    }
+  }
+
+  .admin-cards {
+    @include flex-column;
+
+    .admin-card {
+      @include admin-card;
+
+      .char-header {
+        @include flex-center(row, $spacing-sm);
+        margin-bottom: $spacing-sm;
+      }
+
+      .badge {
+        &.pending {
+          @include admin-badge(
+            $badge-pending-bg,
+            $badge-pending-color,
+            $badge-pending-border
+          );
+        }
+
+        &.approved {
+          @include admin-badge(
+            $badge-approved-bg,
+            $badge-approved-color,
+            $badge-approved-border
+          );
+        }
+
+        &.rejected {
+          @include admin-badge(
+            $badge-rejected-bg,
+            $badge-rejected-color,
+            $badge-rejected-border
+          );
+        }
+
+        &.unknown {
+          @include admin-badge(
+            $badge-unknown-bg,
+            $badge-unknown-color,
+            $badge-unknown-border
+          );
+        }
+      }
+
+      .admin-actions {
+        @include flex-center(row, $spacing-sm);
+        margin-top: $spacing-sm;
+
+        .btn-approve {
+          @include button-primary($badge-approved-bg, $badge-approved-color);
+          padding: 0.3rem 0.8rem;
+          font-size: $font-size-small;
+        }
+
+        .btn-reject {
+          @include button-danger;
+          padding: 0.3rem 0.8rem;
+          font-size: $font-size-small;
+        }
+
+        .btn-edit {
+          @include button-secondary;
+          padding: 0.3rem 0.8rem;
+          font-size: $font-size-small;
+        }
+
+        .btn-delete {
+          @include button-danger;
+          padding: 0.3rem 0.8rem;
+          font-size: $font-size-small;
+          background-color: #dc3545;
+        }
+      }
+
+      .admin-details {
+        margin-top: $spacing-sm;
+        padding-top: $spacing-sm;
+        border-top: 1px solid rgba($border-color, 0.3);
+
+        .detail-row {
+          @include flex-between;
+          margin-bottom: 0.25rem;
+          font-size: $font-size-small;
+
+          .label {
+            font-weight: 500;
+            color: $color-secondary;
+          }
+
+          .value {
+            color: $color-primary;
+          }
+        }
+      }
+    }
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $spacing-lg;
+    margin: $spacing-xl 0;
+
+    .stat-card {
+      @include card-base;
+      text-align: center;
+      padding: $spacing-lg;
+      background: rgba($color-primary, 0.05);
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: $color-primary;
+        font-family: $font-heading;
+      }
+
+      .stat-label {
+        font-size: $font-size-small;
+        color: $color-secondary;
+        margin-top: $spacing-sm;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+    }
+  }
+
+  .admin-nav {
+    @include flex-center(row, $spacing-lg);
+    margin-bottom: $spacing-xl;
+    padding: $spacing-lg;
+    background: rgba($color-secondary, 0.1);
+    border-radius: $border-radius-medium;
+
+    .nav-item {
+      @include button-secondary;
+      padding: $spacing-sm $spacing-lg;
+      text-decoration: none;
+      border-radius: $border-radius-small;
+
+      &.active {
+        @include button-primary;
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+
+    @include mobile-only {
+      flex-direction: column;
+      gap: $spacing-sm;
+
+      .nav-item {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+
+  .admin-filters {
+    @include flex-between;
+    margin-bottom: $spacing-lg;
+    padding: $spacing-lg;
+    background: rgba($color-background, 0.5);
+    border-radius: $border-radius-medium;
+    border: 1px solid rgba($border-color, 0.3);
+
+    .filter-group {
+      @include flex-center(row, $spacing-sm);
+
+      label {
+        font-size: $font-size-small;
+        color: $color-secondary;
+        margin-right: $spacing-sm;
+      }
+
+      select,
+      input {
+        padding: 0.4rem 0.8rem;
+        border: 1px solid $border-color;
+        border-radius: $border-radius-small;
+        background: $color-background;
+        color: $color-primary;
+        font-size: $font-size-small;
+
+        &:focus {
+          outline: 2px solid $color-primary;
+          outline-offset: 2px;
+        }
+      }
+    }
+
+    @include mobile-only {
+      flex-direction: column;
+      gap: $spacing-md;
+
+      .filter-group {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  }
+
+  .admin-pagination {
+    @include flex-center(row, $spacing-sm);
+    margin-top: $spacing-xl;
+
+    .page-btn {
+      @include button-base;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid $border-color;
+      color: $color-primary;
+      background: transparent;
+
+      &:hover {
+        background: rgba($color-primary, 0.1);
+      }
+
+      &.active {
+        @include button-primary;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

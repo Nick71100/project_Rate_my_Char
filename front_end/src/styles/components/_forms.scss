@@ -1,0 +1,22 @@
+form {
+  @include flex-column(center, 10px);
+  padding: $padding-section;
+
+  label {
+    margin-top: 10px;
+    color: $color-secondary;
+  }
+
+  input {
+    border-radius: $border-radius-small;
+  }
+
+  p {
+    font-size: $font-size-small;
+    text-align: center;
+  }
+}
+
+.reg-link {
+  text-decoration: underline;
+}

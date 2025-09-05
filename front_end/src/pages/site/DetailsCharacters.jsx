@@ -30,6 +30,32 @@ function CharDetail() {
     fetchChars();
   }, [id]);
 
+  const getGenderBadgeClass = (gender) => {
+    const genderLower = gender?.toLowerCase() || "";
+
+    if (
+      genderLower.includes("homme") ||
+      genderLower.includes("masculin") ||
+      genderLower === "m"
+    ) {
+      return "gender-badge gender-male";
+    } else if (
+      genderLower.includes("femme") ||
+      genderLower.includes("féminin") ||
+      genderLower === "f"
+    ) {
+      return "gender-badge gender-female";
+    } else if (
+      genderLower.includes("autre") ||
+      genderLower.includes("non-binaire") ||
+      genderLower.includes("neutre")
+    ) {
+      return "gender-badge gender-other";
+    } else {
+      return "gender-badge gender-unspecified";
+    }
+  };
+
   if (loading) return <div>Chargement...</div>;
   if (!character) return <div>Personnage non trouvé.</div>;
 
@@ -42,7 +68,13 @@ function CharDetail() {
           <img src={character.image_url} alt={`Image de ${character.name}`} />
           <p>{character.long_desc}</p>
           <p>Œuvre : {character.artwork_title || "Non spécifiée"}</p>
-          <p>Genre : {character.gender_label || "Non spécifié"}</p>
+          <div className="gender-section">
+            <span>Genre : </span>
+            <span className={getGenderBadgeClass(character.gender_label)}>
+              {character.gender_label || "Non spécifié"}
+            </span>
+          </div>
+
           <p>
             Ajouté par : {character.creator_username || "Utilisateur supprimé"}
           </p>

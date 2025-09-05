@@ -98,6 +98,28 @@ class Votes {
       );
     }
   }
+
+  static async getVoteStatsByCharacter(characterId) {
+    try {
+      const [rows] = await db.execute(
+        `
+        SELECT 
+          c.label as criteria_name,
+          COUNT(v.id) as vote_count
+        FROM criterias c
+        LEFT JOIN votes v ON c.id = v.id_criteria AND v.id_character = ?
+        GROUP BY c.id, c.label
+        ORDER BY c.label
+        `,
+        [characterId]
+      );
+      return rows;
+    } catch (error) {
+      throw new Error(
+        "Erreur récupération stats votes du personnage : " + error.message
+      );
+    }
+  }
 }
 
 export default Votes;

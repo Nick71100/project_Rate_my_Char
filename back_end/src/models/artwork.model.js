@@ -29,22 +29,22 @@ class Artworks {
   static async getById(id) {
     try {
       const [[artwork]] = await db.execute(
-        "SELECT  * FROM artworks WHERE id = ?",
+        "SELECT * FROM artworks WHERE id = ?",
         [id]
       );
       if (!artwork) return null;
 
       const [categories] = await db.execute(
         `
-      SELECT c.categorie
-      FROM categories c
-      INNER JOIN artworks_categories ac ON c.id = ac.category_id
-      WHERE ac.artwork_id = ?
-    `,
+        SELECT c.id, c.categorie
+        FROM categories c
+        INNER JOIN artworks_categories ac ON c.id = ac.category_id
+        WHERE ac.artwork_id = ?
+        `,
         [id]
       );
 
-      artwork.categories = categories.map((cat) => cat.categorie);
+      artwork.categories = categories;
 
       return artwork;
     } catch (error) {
