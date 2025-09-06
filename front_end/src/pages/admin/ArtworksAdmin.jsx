@@ -97,7 +97,9 @@ const ArtsAdmin = () => {
     <main className="admin-main">
       <section>
         <h3>Oeuvres</h3>
-        <button onClick={() => setShowAddModal(true)}>Ajouter</button>
+        <div className="admin-options">
+          <button onClick={() => setShowAddModal(true)}>Ajouter</button>
+        </div>
         <div className="admin-arts">
           <div className="admin-cards">
             {artworks.map((arts) => (

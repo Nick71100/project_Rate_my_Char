@@ -1,68 +1,147 @@
+.badge {
+  padding: $padding-badge;
+  border-radius: $border-radius-round;
+  font-size: $font-size-badge-small;
+  font-weight: 500;
+  transition: all $transition-fast;
+  display: inline-block;
+}
+
+.badge-category {
+  @extend .badge;
+  background-color: #3498db;
+  color: white;
+
+  &:hover {
+    background-color: #2980b9;
+  }
+}
+
 .category-badge {
-  @include category-badge;
+  @extend .badge-category;
 }
 
-.no-categories {
-  color: #7f8c8d;
-  font-style: italic;
-}
-
-.gender-badge {
-  @include badge-base;
+.badge-gender {
+  @extend .badge;
   border: 2px solid transparent;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.badge-gender--male {
+  @extend .badge-gender;
+  background-color: $gender-male;
+  color: white;
+
+  &:hover {
+    background-color: $gender-male-hover;
+  }
+}
+
+.badge-gender--female {
+  @extend .badge-gender;
+  background-color: $gender-female;
+  color: white;
+
+  &:hover {
+    background-color: $gender-female-hover;
+  }
+}
+
+.badge-gender--other {
+  @extend .badge-gender;
+  background-color: $gender-other;
+  color: #2c3e50;
+
+  &:hover {
+    background-color: $gender-other-hover;
+  }
+}
+
+.badge-gender--unspecified {
+  @extend .badge-gender;
+  background-color: $gender-unspecified;
+  color: #2c3e50;
+  border-color: $gender-unspecified-border;
+
+  &:hover {
+    background-color: $gender-unspecified-hover;
+    border-color: #95a5a6;
+  }
 }
 
 .gender-male {
-  @include gender-badge($gender-male, white, $gender-male-hover);
+  @extend .badge-gender--male;
 }
-
 .gender-female {
-  @include gender-badge($gender-female, white, $gender-female-hover);
+  @extend .badge-gender--female;
 }
-
 .gender-other {
-  @include gender-badge($gender-other, #2c3e50, $gender-other-hover);
+  @extend .badge-gender--other;
 }
-
 .gender-unspecified {
-  @include gender-badge(
-    $gender-unspecified,
-    #2c3e50,
-    $gender-unspecified-hover,
-    $gender-unspecified-border
-  );
+  @extend .badge-gender--unspecified;
 }
 
-.admin-cards .admin-card .badge {
-  &.pending {
-    @include admin-badge(
-      $badge-pending-bg,
-      $badge-pending-color,
-      $badge-pending-border
-    );
-  }
+.badge-admin {
+  font-size: $font-size-badge;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 1px solid;
+}
 
-  &.approved {
-    @include admin-badge(
-      $badge-approved-bg,
-      $badge-approved-color,
-      $badge-approved-border
-    );
-  }
+.badge-admin--pending {
+  @extend .badge-admin;
+  background: $badge-pending-bg;
+  color: $badge-pending-color;
+  border-color: $badge-pending-border;
+}
 
-  &.rejected {
-    @include admin-badge(
-      $badge-rejected-bg,
-      $badge-rejected-color,
-      $badge-rejected-border
-    );
-  }
+.badge-admin--approved {
+  @extend .badge-admin;
+  background: $badge-approved-bg;
+  color: $badge-approved-color;
+  border-color: $badge-approved-border;
+}
 
-  &.unknown {
-    @include admin-badge(
-      $badge-unknown-bg,
-      $badge-unknown-color,
-      $badge-unknown-border
-    );
+.badge-admin--rejected {
+  @extend .badge-admin;
+  background: $badge-rejected-bg;
+  color: $badge-rejected-color;
+  border-color: $badge-rejected-border;
+}
+
+.badge-admin--unknown {
+  @extend .badge-admin;
+  background: $badge-unknown-bg;
+  color: $badge-unknown-color;
+  border-color: $badge-unknown-border;
+}
+
+.admin-cards .admin-card {
+  .badge {
+    &.pending {
+      @extend .badge-admin--pending;
+    }
+    &.approved {
+      @extend .badge-admin--approved;
+    }
+    &.rejected {
+      @extend .badge-admin--rejected;
+    }
+    &.unknown {
+      @extend .badge-admin--unknown;
+    }
+  }
+}
+
+@include mobile-only {
+  .badge {
+    font-size: calc(#{$font-size-badge-small} * 0.9);
+    padding: calc(#{$spacing-xs} * 0.8) calc(#{$spacing-sm} * 0.8);
   }
 }

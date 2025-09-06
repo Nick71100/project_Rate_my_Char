@@ -10,13 +10,19 @@
     .admin-stats {
       margin-top: 20px;
     }
+
+    .admin-options {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
   }
 
   .admin-cards {
     @include flex-column;
 
     .admin-card {
-      @include admin-card;
+      @extend .card-admin;
 
       .char-header {
         @include flex-center(row, $spacing-sm);
@@ -25,35 +31,19 @@
 
       .badge {
         &.pending {
-          @include admin-badge(
-            $badge-pending-bg,
-            $badge-pending-color,
-            $badge-pending-border
-          );
+          @extend .badge-admin--pending;
         }
 
         &.approved {
-          @include admin-badge(
-            $badge-approved-bg,
-            $badge-approved-color,
-            $badge-approved-border
-          );
+          @extend .badge-admin--approved;
         }
 
         &.rejected {
-          @include admin-badge(
-            $badge-rejected-bg,
-            $badge-rejected-color,
-            $badge-rejected-border
-          );
+          @extend .badge-admin--rejected;
         }
 
         &.unknown {
-          @include admin-badge(
-            $badge-unknown-bg,
-            $badge-unknown-color,
-            $badge-unknown-border
-          );
+          @extend .badge-admin--unknown;
         }
       }
 
@@ -62,25 +52,32 @@
         margin-top: $spacing-sm;
 
         .btn-approve {
-          @include button-primary($badge-approved-bg, $badge-approved-color);
+          @extend .btn-primary;
           padding: 0.3rem 0.8rem;
           font-size: $font-size-small;
+          background-color: $badge-approved-bg;
+          color: $badge-approved-color;
+
+          &:hover {
+            background-color: $badge-approved-color;
+            color: $badge-approved-bg;
+          }
         }
 
         .btn-reject {
-          @include button-danger;
+          @extend .btn-danger;
           padding: 0.3rem 0.8rem;
           font-size: $font-size-small;
         }
 
         .btn-edit {
-          @include button-secondary;
+          @extend .btn-secondary;
           padding: 0.3rem 0.8rem;
           font-size: $font-size-small;
         }
 
         .btn-delete {
-          @include button-danger;
+          @extend .btn-danger;
           padding: 0.3rem 0.8rem;
           font-size: $font-size-small;
           background-color: #dc3545;
@@ -117,25 +114,7 @@
     margin: $spacing-xl 0;
 
     .stat-card {
-      @include card-base;
-      text-align: center;
-      padding: $spacing-lg;
-      background: rgba($color-primary, 0.05);
-
-      .stat-number {
-        font-size: 2rem;
-        font-weight: bold;
-        color: $color-primary;
-        font-family: $font-heading;
-      }
-
-      .stat-label {
-        font-size: $font-size-small;
-        color: $color-secondary;
-        margin-top: $spacing-sm;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
+      @extend .card-stat;
     }
   }
 
@@ -147,13 +126,13 @@
     border-radius: $border-radius-medium;
 
     .nav-item {
-      @include button-secondary;
+      @extend .btn-secondary;
       padding: $spacing-sm $spacing-lg;
       text-decoration: none;
       border-radius: $border-radius-small;
 
       &.active {
-        @include button-primary;
+        @extend .btn-primary;
       }
 
       &:hover {
@@ -221,7 +200,7 @@
     margin-top: $spacing-xl;
 
     .page-btn {
-      @include button-base;
+      @extend .btn;
       padding: 0.5rem 0.75rem;
       border: 1px solid $border-color;
       color: $color-primary;
@@ -232,7 +211,7 @@
       }
 
       &.active {
-        @include button-primary;
+        @extend .btn-primary;
       }
 
       &:disabled {

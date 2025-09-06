@@ -6,8 +6,6 @@ import {
   getArtworkById,
   updateArtwork,
 } from "../controllers/artwork.controller.js";
-
-import validateArtwork from "../middlewares/validators/validate.artwork.middleware.js";
 import checkToken from "../middlewares/checkToken.js";
 
 const router = Router();

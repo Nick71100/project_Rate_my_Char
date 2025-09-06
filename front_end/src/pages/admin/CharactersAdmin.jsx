@@ -103,32 +103,25 @@ const CharsAdmin = () => {
 
   if (loading) return <div>Chargement...</div>;
 
-  console.log("Données personnages:", characters); // Ici
-  console.log("Premier personnage:", characters[0]); // Pour voir la structure
-
   return (
     <main className="admin-main">
       <h3>Personnages</h3>
       <section>
         <div className="admin-chars">
-          <button
-            type="button"
-            className="link-button"
-            onClick={() => setShowAddCharModal(true)}
-          >
-            Ajouter
-          </button>
+          <div className="admin-options">
+            <button type="button" onClick={() => setShowAddCharModal(true)}>
+              Ajouter
+            </button>
 
-          <Link to="/admin/moderation" className="link-button">
-            Modérer personnages
-            {pendingCount > 0 && <span className="badge">{pendingCount}</span>}
-          </Link>
+            <Link to="/admin/moderation">
+              Modérer personnages
+              {pendingCount > 0 && (
+                <span className="badge">{pendingCount}</span>
+              )}
+            </Link>
+          </div>
 
           <div className="admin-cards">
-            {console.log(
-              "Personnages avec status:",
-              characters.map((c) => ({ name: c.name, status: c.status }))
-            )}
             {characters.map((char) => (
               <div className="admin-card" key={char.id}>
                 <div className="char-header">

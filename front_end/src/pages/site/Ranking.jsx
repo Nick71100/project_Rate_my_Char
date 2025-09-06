@@ -39,15 +39,43 @@ const Rankings = () => {
       {Object.keys(criteriaLabels).map((criterionId) => (
         <section key={criterionId} className="ranking">
           <h3>{criteriaLabels[criterionId]}</h3>
-          <ul>
-            {(rankings[criterionId] || []).map((entry, index) => (
-              <li key={entry.character_id} className="classement-item">
-                <span className="position">{index + 1}.</span>
-                <span className="character">{entry.character_name}</span>
-                <span className="votes">{entry.vote_count} vote(s)</span>
-              </li>
-            ))}
-          </ul>
+
+          {(rankings[criterionId] || []).length > 0 ? (
+            <div className="ranking-table">
+              <div className="ranking-header">
+                <div>Position</div>
+                <div>Personnage</div>
+                <div>Votes</div>
+              </div>
+
+              <ul>
+                {(rankings[criterionId] || []).map((entry, index) => (
+                  <li key={entry.character_id}>
+                    <div className={`rank-position rank-${index + 1}`}>
+                      {index + 1}
+                    </div>
+
+                    <div className="character-name">{entry.character_name}</div>
+
+                    <div className="score">
+                      <div className="vote-count">{entry.vote_count}</div>
+                      <div className="vote-label">
+                        vote{entry.vote_count > 1 ? "s" : ""}
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <div className="empty-ranking">
+              <div className="empty-icon">🏆</div>
+              <div className="empty-title">Aucun vote pour ce critère</div>
+              <div className="empty-message">
+                Soyez le premier à voter pour établir le classement !
+              </div>
+            </div>
+          )}
         </section>
       ))}
     </main>

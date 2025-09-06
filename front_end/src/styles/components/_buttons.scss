@@ -1,19 +1,99 @@
+.btn {
+  padding: $padding-button;
+  border: none;
+  border-radius: $border-radius-small;
+  cursor: pointer;
+  transition: all $transition-fast;
+  font-weight: 500;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  @extend .btn;
+  background-color: $color-primary;
+  color: $color-background;
+  border: 1px solid $color-primary;
+
+  &:hover {
+    background-color: $color-background;
+    color: $color-primary;
+  }
+}
+
+.btn-secondary {
+  @extend .btn;
+  background-color: $color-white;
+  color: $color-secondary;
+  border: 1px solid $color-secondary;
+  font-weight: bold;
+
+  &:hover {
+    background-color: $color-secondary;
+    color: $color-white;
+  }
+}
+
+.btn-danger {
+  @extend .btn;
+  background-color: crimson;
+  color: white;
+}
+
+.btn-neutral {
+  @extend .btn;
+  background-color: gray;
+  color: white;
+}
+
+.btn-outline-primary {
+  @extend .btn;
+  background-color: transparent;
+  color: $color-primary;
+  border: 1px solid $color-primary;
+
+  &:hover {
+    background-color: $color-primary;
+    color: $color-background;
+  }
+}
+
+.btn-small {
+  padding: 0.3rem 0.8rem;
+  font-size: $font-size-small;
+}
+
+.btn-large {
+  padding: $spacing-sm $spacing-lg;
+  font-size: 1.1rem;
+}
+
 .vote button {
-  @include button-primary;
+  @extend .btn-primary;
   margin: 20px auto;
   padding: 5px 15px;
 }
 
 form button {
-  @include button-secondary;
+  @extend .btn-secondary;
   margin: 20px 0;
   padding: 10px 20px;
 }
 
 .confirm-btn {
-  @include button-danger;
+  @extend .btn-danger;
 }
 
 .cancel-btn {
-  @include button-neutral;
+  @extend .btn-neutral;
 }

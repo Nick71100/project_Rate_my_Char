@@ -47,13 +47,11 @@ button,
 textarea,
 select {
   font: inherit;
-  color: inherit;
 }
 
 button {
   cursor: pointer;
-  border: none;
-  background: none;
+  padding: 0 10px;
 }
 
 input,
@@ -146,7 +144,8 @@ main h2 {
 h3 {
   font-size: 1.5rem;
 }
-.card h3, .detail h3 {
+.card h3, .card-stat h3, .admin-main .stats-grid .stat-card h3, .stats-grid .stat-card h3,
+.user-stats-grid .stat-card h3, .card-character h3, .cards .card h3, .cards .card-character h3, .cards .card-stat h3, .detail h3 {
   text-align: center;
   margin: 20px 0;
 }
@@ -168,7 +167,8 @@ p {
 main p {
   text-align: center;
 }
-.card p {
+.card p, .card-stat p, .admin-main .stats-grid .stat-card p, .stats-grid .stat-card p,
+.user-stats-grid .stat-card p, .card-character p, .cards .card p, .cards .card-character p, .cards .card-stat p {
   margin: 10px 0;
   text-align: left;
 }
@@ -435,24 +435,8 @@ main span {
   text-align: center;
 }
 .vote button {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: #94dcfd;
-  color: #000619;
-  border: 1px solid #94dcfd;
   margin: 20px auto;
   padding: 5px 15px;
-}
-.vote button:active {
-  transform: translateY(1px);
-}
-.vote button:hover {
-  background-color: #000619;
-  color: #94dcfd;
 }
 
 .top-rate h2 {
@@ -522,19 +506,6 @@ main span {
     transform: translateY(0);
   }
 }
-.top-character-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s;
-}
-.top-character-card:hover::before {
-  left: 100%;
-}
 @media screen and (max-width: 767px) {
   .top-character-card .criteria-badge {
     font-size: 0.7rem;
@@ -560,282 +531,336 @@ footer p {
   text-align: center;
 }
 
-.vote button {
+.btn, .detail-navigation .nav-link, .admin-main .admin-pagination .page-btn, .btn-outline-primary, .btn-neutral, .cancel-btn, .btn-danger, .user-dashboard .account-btns .btn-delete-account, .detail-actions .btn-delete, .admin-main .admin-cards .admin-card .admin-actions .btn-delete, .admin-main .admin-cards .admin-card .admin-actions .btn-reject, .confirm-btn, .btn-secondary, .user-dashboard .account-btns .btn-edit-profile, .user-dashboard .change-password .password-form .password-actions .btn-cancel-password, .detail-actions .btn-edit, .admin-main .admin-nav .nav-item, .admin-main .admin-cards .admin-card .admin-actions .btn-edit, form button, .btn-primary, .user-dashboard .account-btns .btn-logout, .user-dashboard .change-password .password-form .password-actions .btn-save-password, .detail-actions .btn-back, .admin-main .admin-pagination .page-btn.active, .admin-main .admin-nav .nav-item.active, .admin-main .admin-cards .admin-card .admin-actions .btn-approve, .vote button {
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: 500;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+}
+.btn:active, .detail-navigation .nav-link:active, .admin-main .admin-pagination .page-btn:active, .btn-outline-primary:active, .btn-neutral:active, .cancel-btn:active, .btn-danger:active, .user-dashboard .account-btns .btn-delete-account:active, .detail-actions .btn-delete:active, .admin-main .admin-cards .admin-card .admin-actions .btn-delete:active, .admin-main .admin-cards .admin-card .admin-actions .btn-reject:active, .confirm-btn:active, .btn-secondary:active, .user-dashboard .account-btns .btn-edit-profile:active, .user-dashboard .change-password .password-form .password-actions .btn-cancel-password:active, .detail-actions .btn-edit:active, .admin-main .admin-nav .nav-item:active, .admin-main .admin-cards .admin-card .admin-actions .btn-edit:active, form button:active, .btn-primary:active, .user-dashboard .account-btns .btn-logout:active, .user-dashboard .change-password .password-form .password-actions .btn-save-password:active, .detail-actions .btn-back:active, .admin-main .admin-cards .admin-card .admin-actions .btn-approve:active, .vote button:active {
+  transform: translateY(1px);
+}
+.btn:disabled, .detail-navigation .nav-link:disabled, .admin-main .admin-pagination .page-btn:disabled, .btn-outline-primary:disabled, .btn-neutral:disabled, .cancel-btn:disabled, .btn-danger:disabled, .user-dashboard .account-btns .btn-delete-account:disabled, .detail-actions .btn-delete:disabled, .admin-main .admin-cards .admin-card .admin-actions .btn-delete:disabled, .admin-main .admin-cards .admin-card .admin-actions .btn-reject:disabled, .confirm-btn:disabled, .btn-secondary:disabled, .user-dashboard .account-btns .btn-edit-profile:disabled, .user-dashboard .change-password .password-form .password-actions .btn-cancel-password:disabled, .detail-actions .btn-edit:disabled, .admin-main .admin-nav .nav-item:disabled, .admin-main .admin-cards .admin-card .admin-actions .btn-edit:disabled, form button:disabled, .btn-primary:disabled, .user-dashboard .account-btns .btn-logout:disabled, .user-dashboard .change-password .password-form .password-actions .btn-save-password:disabled, .detail-actions .btn-back:disabled, .admin-main .admin-cards .admin-card .admin-actions .btn-approve:disabled, .vote button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary, .user-dashboard .account-btns .btn-logout, .user-dashboard .change-password .password-form .password-actions .btn-save-password, .detail-actions .btn-back, .admin-main .admin-pagination .page-btn.active, .admin-main .admin-nav .nav-item.active, .admin-main .admin-cards .admin-card .admin-actions .btn-approve, .vote button {
   background-color: #94dcfd;
   color: #000619;
   border: 1px solid #94dcfd;
-  margin: 20px auto;
-  padding: 5px 15px;
 }
-.vote button:active {
-  transform: translateY(1px);
-}
-.vote button:hover {
+.btn-primary:hover, .user-dashboard .account-btns .btn-logout:hover, .user-dashboard .change-password .password-form .password-actions .btn-save-password:hover, .detail-actions .btn-back:hover, .admin-main .admin-pagination .page-btn.active:hover, .admin-main .admin-nav .nav-item.active:hover, .admin-main .admin-cards .admin-card .admin-actions .btn-approve:hover, .vote button:hover {
   background-color: #000619;
   color: #94dcfd;
 }
 
-form button {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
+.btn-secondary, .user-dashboard .account-btns .btn-edit-profile, .user-dashboard .change-password .password-form .password-actions .btn-cancel-password, .detail-actions .btn-edit, .admin-main .admin-nav .nav-item, .admin-main .admin-cards .admin-card .admin-actions .btn-edit, form button {
   background-color: #fff;
   color: #9fb1e2;
   border: 1px solid #9fb1e2;
   font-weight: bold;
-  margin: 20px 0;
-  padding: 10px 20px;
 }
-form button:active {
-  transform: translateY(1px);
-}
-form button:hover {
+.btn-secondary:hover, .user-dashboard .account-btns .btn-edit-profile:hover, .user-dashboard .change-password .password-form .password-actions .btn-cancel-password:hover, .detail-actions .btn-edit:hover, .admin-main .admin-nav .nav-item:hover, .admin-main .admin-cards .admin-card .admin-actions .btn-edit:hover, form button:hover {
   background-color: #9fb1e2;
   color: #fff;
 }
 
-.confirm-btn {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
+.btn-danger, .user-dashboard .account-btns .btn-delete-account, .detail-actions .btn-delete, .admin-main .admin-cards .admin-card .admin-actions .btn-delete, .admin-main .admin-cards .admin-card .admin-actions .btn-reject, .confirm-btn {
   background-color: crimson;
   color: white;
 }
-.confirm-btn:active {
-  transform: translateY(1px);
-}
 
-.cancel-btn {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
+.btn-neutral, .cancel-btn {
   background-color: gray;
   color: white;
 }
-.cancel-btn:active {
-  transform: translateY(1px);
+
+.btn-outline-primary {
+  background-color: transparent;
+  color: #94dcfd;
+  border: 1px solid #94dcfd;
+}
+.btn-outline-primary:hover {
+  background-color: #94dcfd;
+  color: #000619;
 }
 
-.category-badge {
+.btn-small {
+  padding: 0.3rem 0.8rem;
+  font-size: 14px;
+}
+
+.btn-large {
+  padding: 0.5rem 1.5rem;
+  font-size: 1.1rem;
+}
+
+.vote button {
+  margin: 20px auto;
+  padding: 5px 15px;
+}
+
+form button {
+  margin: 20px 0;
+  padding: 10px 20px;
+}
+
+.badge, .badge-gender, .badge-gender--unspecified, .gender-unspecified, .badge-gender--other, .gender-other, .badge-gender--female, .gender-female, .badge-gender--male, .gender-male, .badge-category, .category-badge {
   padding: 0.25rem 0.75rem;
   border-radius: 1rem;
   font-size: 0.875rem;
   font-weight: 500;
   transition: all 0.2s ease;
   display: inline-block;
+}
+
+.badge-category, .category-badge {
   background-color: #3498db;
   color: white;
 }
-.category-badge:hover {
+.badge-category:hover, .category-badge:hover {
   background-color: #2980b9;
 }
 
-.no-categories {
-  color: #7f8c8d;
-  font-style: italic;
-}
-
-.gender-badge {
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  display: inline-block;
+.badge-gender, .badge-gender--unspecified, .gender-unspecified, .badge-gender--other, .gender-other, .badge-gender--female, .gender-female, .badge-gender--male, .gender-male {
   border: 2px solid transparent;
 }
-
-.gender-male {
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  display: inline-block;
-  background-color: #3498db;
-  color: white;
-  border: 2px solid transparent;
-}
-.gender-male:hover {
-  background-color: #2980b9;
+.badge-gender:hover, .badge-gender--unspecified:hover, .gender-unspecified:hover, .badge-gender--other:hover, .gender-other:hover, .badge-gender--female:hover, .gender-female:hover, .badge-gender--male:hover, .gender-male:hover {
   transform: scale(1.05);
 }
 
-.gender-female {
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  display: inline-block;
+.badge-gender--male, .gender-male {
+  background-color: #3498db;
+  color: white;
+}
+.badge-gender--male:hover, .gender-male:hover {
+  background-color: #2980b9;
+}
+
+.badge-gender--female, .gender-female {
   background-color: #e91e63;
   color: white;
-  border: 2px solid transparent;
 }
-.gender-female:hover {
+.badge-gender--female:hover, .gender-female:hover {
   background-color: #c2185b;
-  transform: scale(1.05);
 }
 
-.gender-other {
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  display: inline-block;
+.badge-gender--other, .gender-other {
   background-color: #f1c40f;
   color: #2c3e50;
-  border: 2px solid transparent;
 }
-.gender-other:hover {
+.badge-gender--other:hover, .gender-other:hover {
   background-color: #f39c12;
-  transform: scale(1.05);
 }
 
-.gender-unspecified {
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  display: inline-block;
+.badge-gender--unspecified, .gender-unspecified {
   background-color: #ecf0f1;
   color: #2c3e50;
-  border: 2px solid transparent;
   border-color: #bdc3c7;
 }
-.gender-unspecified:hover {
+.badge-gender--unspecified:hover, .gender-unspecified:hover {
   background-color: #d5dbdb;
-  transform: scale(1.05);
+  border-color: #95a5a6;
 }
 
-.admin-cards .admin-card .badge.pending {
+.badge-admin, .badge-admin--unknown, .admin-main .admin-cards .admin-card .badge.unknown, .admin-main .admin-cards .admin-card .unknown.badge-category, .admin-main .admin-cards .admin-card .unknown.category-badge, .admin-main .admin-cards .admin-card .unknown.badge-gender, .admin-main .admin-cards .admin-card .unknown.badge-gender--male, .admin-main .admin-cards .admin-card .unknown.badge-gender--female, .admin-main .admin-cards .admin-card .unknown.badge-gender--other, .admin-main .admin-cards .admin-card .unknown.badge-gender--unspecified, .admin-main .admin-cards .admin-card .unknown.gender-male, .admin-main .admin-cards .admin-card .unknown.gender-female, .admin-main .admin-cards .admin-card .unknown.gender-other, .admin-main .admin-cards .admin-card .unknown.gender-unspecified, .admin-cards .admin-card .badge.unknown, .admin-cards .admin-card .unknown.badge-category, .admin-cards .admin-card .unknown.category-badge, .admin-cards .admin-card .unknown.badge-gender, .admin-cards .admin-card .unknown.badge-gender--male, .admin-cards .admin-card .unknown.badge-gender--female, .admin-cards .admin-card .unknown.badge-gender--other, .admin-cards .admin-card .unknown.badge-gender--unspecified, .admin-cards .admin-card .unknown.gender-male, .admin-cards .admin-card .unknown.gender-female, .admin-cards .admin-card .unknown.gender-other, .admin-cards .admin-card .unknown.gender-unspecified, .badge-admin--rejected, .admin-main .admin-cards .admin-card .badge.rejected, .admin-main .admin-cards .admin-card .rejected.badge-category, .admin-main .admin-cards .admin-card .rejected.category-badge, .admin-main .admin-cards .admin-card .rejected.badge-gender, .admin-main .admin-cards .admin-card .rejected.badge-gender--male, .admin-main .admin-cards .admin-card .rejected.badge-gender--female, .admin-main .admin-cards .admin-card .rejected.badge-gender--other, .admin-main .admin-cards .admin-card .rejected.badge-gender--unspecified, .admin-main .admin-cards .admin-card .rejected.gender-male, .admin-main .admin-cards .admin-card .rejected.gender-female, .admin-main .admin-cards .admin-card .rejected.gender-other, .admin-main .admin-cards .admin-card .rejected.gender-unspecified, .admin-cards .admin-card .badge.rejected, .admin-cards .admin-card .rejected.badge-category, .admin-cards .admin-card .rejected.category-badge, .admin-cards .admin-card .rejected.badge-gender, .admin-cards .admin-card .rejected.badge-gender--male, .admin-cards .admin-card .rejected.badge-gender--female, .admin-cards .admin-card .rejected.badge-gender--other, .admin-cards .admin-card .rejected.badge-gender--unspecified, .admin-cards .admin-card .rejected.gender-male, .admin-cards .admin-card .rejected.gender-female, .admin-cards .admin-card .rejected.gender-other, .admin-cards .admin-card .rejected.gender-unspecified, .badge-admin--approved, .admin-main .admin-cards .admin-card .badge.approved, .admin-main .admin-cards .admin-card .approved.badge-category, .admin-main .admin-cards .admin-card .approved.category-badge, .admin-main .admin-cards .admin-card .approved.badge-gender, .admin-main .admin-cards .admin-card .approved.badge-gender--male, .admin-main .admin-cards .admin-card .approved.badge-gender--female, .admin-main .admin-cards .admin-card .approved.badge-gender--other, .admin-main .admin-cards .admin-card .approved.badge-gender--unspecified, .admin-main .admin-cards .admin-card .approved.gender-male, .admin-main .admin-cards .admin-card .approved.gender-female, .admin-main .admin-cards .admin-card .approved.gender-other, .admin-main .admin-cards .admin-card .approved.gender-unspecified, .admin-cards .admin-card .badge.approved, .admin-cards .admin-card .approved.badge-category, .admin-cards .admin-card .approved.category-badge, .admin-cards .admin-card .approved.badge-gender, .admin-cards .admin-card .approved.badge-gender--male, .admin-cards .admin-card .approved.badge-gender--female, .admin-cards .admin-card .approved.badge-gender--other, .admin-cards .admin-card .approved.badge-gender--unspecified, .admin-cards .admin-card .approved.gender-male, .admin-cards .admin-card .approved.gender-female, .admin-cards .admin-card .approved.gender-other, .admin-cards .admin-card .approved.gender-unspecified, .badge-admin--pending, .admin-main .admin-cards .admin-card .badge.pending, .admin-main .admin-cards .admin-card .pending.badge-category, .admin-main .admin-cards .admin-card .pending.category-badge, .admin-main .admin-cards .admin-card .pending.badge-gender, .admin-main .admin-cards .admin-card .pending.badge-gender--male, .admin-main .admin-cards .admin-card .pending.badge-gender--female, .admin-main .admin-cards .admin-card .pending.badge-gender--other, .admin-main .admin-cards .admin-card .pending.badge-gender--unspecified, .admin-main .admin-cards .admin-card .pending.gender-male, .admin-main .admin-cards .admin-card .pending.gender-female, .admin-main .admin-cards .admin-card .pending.gender-other, .admin-main .admin-cards .admin-card .pending.gender-unspecified, .admin-cards .admin-card .badge.pending, .admin-cards .admin-card .pending.badge-category, .admin-cards .admin-card .pending.category-badge, .admin-cards .admin-card .pending.badge-gender, .admin-cards .admin-card .pending.badge-gender--male, .admin-cards .admin-card .pending.badge-gender--female, .admin-cards .admin-card .pending.badge-gender--other, .admin-cards .admin-card .pending.badge-gender--unspecified, .admin-cards .admin-card .pending.gender-male, .admin-cards .admin-card .pending.gender-female, .admin-cards .admin-card .pending.gender-other, .admin-cards .admin-card .pending.gender-unspecified {
   font-size: 0.8rem;
   padding: 0.25rem 0.5rem;
   border-radius: 12px;
   font-weight: bold;
   text-transform: uppercase;
+  border: 1px solid;
+}
+
+.badge-admin--pending, .admin-main .admin-cards .admin-card .badge.pending, .admin-main .admin-cards .admin-card .pending.badge-category, .admin-main .admin-cards .admin-card .pending.category-badge, .admin-main .admin-cards .admin-card .pending.badge-gender, .admin-main .admin-cards .admin-card .pending.badge-gender--male, .admin-main .admin-cards .admin-card .pending.badge-gender--female, .admin-main .admin-cards .admin-card .pending.badge-gender--other, .admin-main .admin-cards .admin-card .pending.badge-gender--unspecified, .admin-main .admin-cards .admin-card .pending.gender-male, .admin-main .admin-cards .admin-card .pending.gender-female, .admin-main .admin-cards .admin-card .pending.gender-other, .admin-main .admin-cards .admin-card .pending.gender-unspecified, .admin-cards .admin-card .badge.pending, .admin-cards .admin-card .pending.badge-category, .admin-cards .admin-card .pending.category-badge, .admin-cards .admin-card .pending.badge-gender, .admin-cards .admin-card .pending.badge-gender--male, .admin-cards .admin-card .pending.badge-gender--female, .admin-cards .admin-card .pending.badge-gender--other, .admin-cards .admin-card .pending.badge-gender--unspecified, .admin-cards .admin-card .pending.gender-male, .admin-cards .admin-card .pending.gender-female, .admin-cards .admin-card .pending.gender-other, .admin-cards .admin-card .pending.gender-unspecified {
   background: #fff3cd;
   color: #856404;
-  border: 1px solid #ffeaa7;
+  border-color: #ffeaa7;
 }
-.admin-cards .admin-card .badge.approved {
-  font-size: 0.8rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
+
+.badge-admin--approved, .admin-main .admin-cards .admin-card .badge.approved, .admin-main .admin-cards .admin-card .approved.badge-category, .admin-main .admin-cards .admin-card .approved.category-badge, .admin-main .admin-cards .admin-card .approved.badge-gender, .admin-main .admin-cards .admin-card .approved.badge-gender--male, .admin-main .admin-cards .admin-card .approved.badge-gender--female, .admin-main .admin-cards .admin-card .approved.badge-gender--other, .admin-main .admin-cards .admin-card .approved.badge-gender--unspecified, .admin-main .admin-cards .admin-card .approved.gender-male, .admin-main .admin-cards .admin-card .approved.gender-female, .admin-main .admin-cards .admin-card .approved.gender-other, .admin-main .admin-cards .admin-card .approved.gender-unspecified, .admin-cards .admin-card .badge.approved, .admin-cards .admin-card .approved.badge-category, .admin-cards .admin-card .approved.category-badge, .admin-cards .admin-card .approved.badge-gender, .admin-cards .admin-card .approved.badge-gender--male, .admin-cards .admin-card .approved.badge-gender--female, .admin-cards .admin-card .approved.badge-gender--other, .admin-cards .admin-card .approved.badge-gender--unspecified, .admin-cards .admin-card .approved.gender-male, .admin-cards .admin-card .approved.gender-female, .admin-cards .admin-card .approved.gender-other, .admin-cards .admin-card .approved.gender-unspecified {
   background: #d4edda;
   color: #155724;
-  border: 1px solid #c3e6cb;
+  border-color: #c3e6cb;
 }
-.admin-cards .admin-card .badge.rejected {
-  font-size: 0.8rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
+
+.badge-admin--rejected, .admin-main .admin-cards .admin-card .badge.rejected, .admin-main .admin-cards .admin-card .rejected.badge-category, .admin-main .admin-cards .admin-card .rejected.category-badge, .admin-main .admin-cards .admin-card .rejected.badge-gender, .admin-main .admin-cards .admin-card .rejected.badge-gender--male, .admin-main .admin-cards .admin-card .rejected.badge-gender--female, .admin-main .admin-cards .admin-card .rejected.badge-gender--other, .admin-main .admin-cards .admin-card .rejected.badge-gender--unspecified, .admin-main .admin-cards .admin-card .rejected.gender-male, .admin-main .admin-cards .admin-card .rejected.gender-female, .admin-main .admin-cards .admin-card .rejected.gender-other, .admin-main .admin-cards .admin-card .rejected.gender-unspecified, .admin-cards .admin-card .badge.rejected, .admin-cards .admin-card .rejected.badge-category, .admin-cards .admin-card .rejected.category-badge, .admin-cards .admin-card .rejected.badge-gender, .admin-cards .admin-card .rejected.badge-gender--male, .admin-cards .admin-card .rejected.badge-gender--female, .admin-cards .admin-card .rejected.badge-gender--other, .admin-cards .admin-card .rejected.badge-gender--unspecified, .admin-cards .admin-card .rejected.gender-male, .admin-cards .admin-card .rejected.gender-female, .admin-cards .admin-card .rejected.gender-other, .admin-cards .admin-card .rejected.gender-unspecified {
   background: #f8d7da;
   color: #721c24;
-  border: 1px solid #f5c6cb;
+  border-color: #f5c6cb;
 }
-.admin-cards .admin-card .badge.unknown {
-  font-size: 0.8rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
+
+.badge-admin--unknown, .admin-main .admin-cards .admin-card .badge.unknown, .admin-main .admin-cards .admin-card .unknown.badge-category, .admin-main .admin-cards .admin-card .unknown.category-badge, .admin-main .admin-cards .admin-card .unknown.badge-gender, .admin-main .admin-cards .admin-card .unknown.badge-gender--male, .admin-main .admin-cards .admin-card .unknown.badge-gender--female, .admin-main .admin-cards .admin-card .unknown.badge-gender--other, .admin-main .admin-cards .admin-card .unknown.badge-gender--unspecified, .admin-main .admin-cards .admin-card .unknown.gender-male, .admin-main .admin-cards .admin-card .unknown.gender-female, .admin-main .admin-cards .admin-card .unknown.gender-other, .admin-main .admin-cards .admin-card .unknown.gender-unspecified, .admin-cards .admin-card .badge.unknown, .admin-cards .admin-card .unknown.badge-category, .admin-cards .admin-card .unknown.category-badge, .admin-cards .admin-card .unknown.badge-gender, .admin-cards .admin-card .unknown.badge-gender--male, .admin-cards .admin-card .unknown.badge-gender--female, .admin-cards .admin-card .unknown.badge-gender--other, .admin-cards .admin-card .unknown.badge-gender--unspecified, .admin-cards .admin-card .unknown.gender-male, .admin-cards .admin-card .unknown.gender-female, .admin-cards .admin-card .unknown.gender-other, .admin-cards .admin-card .unknown.gender-unspecified {
   background: #e2e3e5;
   color: #383d41;
-  border: 1px solid #d6d8db;
+  border-color: #d6d8db;
+}
+
+@media screen and (max-width: 767px) {
+  .badge, .badge-category, .category-badge, .badge-gender, .badge-gender--male, .badge-gender--female, .badge-gender--other, .badge-gender--unspecified, .gender-male, .gender-female, .gender-other, .gender-unspecified {
+    font-size: calc(0.875rem * 0.9);
+    padding: calc(0.25rem * 0.8) calc(0.5rem * 0.8);
+  }
+}
+.card, .card-stat, .admin-main .stats-grid .stat-card, .stats-grid .stat-card,
+.user-stats-grid .stat-card, .card-character, .cards .card, .cards .card-character, .cards .card-stat {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #94dcfd;
+  background: inherit;
 }
 
 .cards {
   display: flex;
-  flex-direction: row;
+  flex-direction: 20px;
   justify-content: center;
   align-items: center;
-  gap: 20px;
   flex-wrap: wrap;
   padding: 20px;
+  justify-content: space-around;
 }
-.cards .card {
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #94dcfd;
+
+.card-character, .cards .card, .cards .card-character, .cards .card-stat, .cards .stats-grid .stat-card, .stats-grid .cards .stat-card,
+.cards .user-stats-grid .stat-card,
+.user-stats-grid .cards .stat-card {
   width: 90%;
+  margin: 10px;
+  height: 450px;
+  display: flex;
 }
-.cards .card a {
+.card-character a, .cards .card a, .cards .card-character a, .cards .card-stat a, .cards .stats-grid .stat-card a, .stats-grid .cards .stat-card a,
+.cards .user-stats-grid .stat-card a,
+.user-stats-grid .cards .stat-card a {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  color: inherit;
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
 }
-.cards .card a h3 {
+.card-character a h3, .cards .card a h3, .cards .card-character a h3, .cards .card-stat a h3, .cards .stats-grid .stat-card a h3, .stats-grid .cards .stat-card a h3,
+.cards .user-stats-grid .stat-card a h3,
+.user-stats-grid .cards .stat-card a h3 {
   text-align: center;
   margin: 20px 0;
+  flex-shrink: 0;
 }
-.cards .card a p {
-  margin: 10px 0;
-  text-align: left;
-}
-.cards .card a img {
+.card-character a img, .cards .card a img, .cards .card-character a img, .cards .card-stat a img, .cards .stats-grid .stat-card a img, .stats-grid .cards .stat-card a img,
+.cards .user-stats-grid .stat-card a img,
+.user-stats-grid .cards .stat-card a img {
   width: 90%;
-  height: auto;
+  height: 200px;
+  -o-object-fit: cover;
+     object-fit: cover;
   align-self: center;
   border: 1px solid #94dcfd;
   border-radius: 5px;
 }
 @media screen and (min-width: 768px) {
-  .cards .card {
+  .card-character, .cards .card, .cards .card-character, .cards .card-stat, .cards .stats-grid .stat-card, .stats-grid .cards .stat-card,
+  .cards .user-stats-grid .stat-card,
+  .user-stats-grid .cards .stat-card {
     width: 45%;
+    margin: 10px;
+    height: 420px;
   }
 }
 @media screen and (min-width: 1440px) {
-  .cards .card {
+  .card-character, .cards .card, .cards .card-character, .cards .card-stat, .cards .stats-grid .stat-card, .stats-grid .cards .stat-card,
+  .cards .user-stats-grid .stat-card,
+  .user-stats-grid .cards .stat-card {
     width: 22%;
+    margin: 10px;
   }
-  .cards .card a img {
+  .card-character a img, .cards .card a img, .cards .card-character a img, .cards .card-stat a img, .cards .stats-grid .stat-card a img, .stats-grid .cards .stat-card a img,
+  .cards .user-stats-grid .stat-card a img,
+  .user-stats-grid .cards .stat-card a img {
     width: auto;
     height: 160px;
   }
 }
 
-.admin-cards {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
-.admin-cards .admin-card {
+.card-admin, .user-dashboard .vote-history .vote-list .vote-item, .user-dashboard .user-stats div,
+.user-dashboard .account div, .admin-main .admin-cards .admin-card, .vote-history .vote-item, .user-stats div,
+.account div, .admin-cards .admin-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
   padding: 15px 0;
   border-top: 1px solid #94dcfd;
-}
-.admin-cards .admin-card .char-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
+  background: rgba(148, 220, 253, 0.02);
+  border-radius: 5px;
   margin-bottom: 0.5rem;
+  transition: all 0.2s ease;
+}
+.card-admin:hover, .user-dashboard .vote-history .vote-list .vote-item:hover, .vote-history .vote-item:hover, .user-stats div:hover,
+.account div:hover, .admin-cards .admin-card:hover {
+  background: rgba(148, 220, 253, 0.05);
+  transform: translateX(5px);
+}
+
+.list-item, .ranking ul li {
+  padding: 10px 0;
+  border-top: 1px solid #94dcfd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+.list-item:last-child, .ranking ul li:last-child {
+  border-bottom: 1px solid #94dcfd;
+}
+.list-item:hover, .ranking ul li:hover {
+  background-color: rgba(148, 220, 253, 0.05);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 5px;
+}
+
+.card-stat, .admin-main .stats-grid .stat-card, .stats-grid .stat-card,
+.user-stats-grid .stat-card {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(148, 220, 253, 0.03);
+  transition: all 0.2s ease;
+}
+.card-stat:hover, .stats-grid .stat-card:hover,
+.user-stats-grid .stat-card:hover {
+  background: rgba(148, 220, 253, 0.08);
+  transform: translateY(-2px);
+}
+.card-stat .stat-number, .stats-grid .stat-card .stat-number,
+.user-stats-grid .stat-card .stat-number {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #94dcfd;
+  font-family: "Bruno Ace", sans-serif;
+  margin-bottom: 0.25rem;
+}
+.card-stat .stat-label, .stats-grid .stat-card .stat-label,
+.user-stats-grid .stat-card .stat-label {
+  font-size: 14px;
+  color: #9fb1e2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.card-stat .stat-icon, .stats-grid .stat-card .stat-icon,
+.user-stats-grid .stat-card .stat-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #94dcfd;
+}
+
+.ranking ul li {
+  padding: 1rem 0;
+  position: relative;
 }
 
 form {
@@ -987,18 +1012,15 @@ form p {
 .admin-main section .admin-stats {
   margin-top: 20px;
 }
+.admin-main section .admin-options {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
 .admin-main .admin-cards {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-}
-.admin-main .admin-cards .admin-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  padding: 15px 0;
-  border-top: 1px solid #94dcfd;
 }
 .admin-main .admin-cards .admin-card .char-header {
   display: flex;
@@ -1007,46 +1029,6 @@ form p {
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
-}
-.admin-main .admin-cards .admin-card .badge.pending {
-  font-size: 0.8rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-  background: #fff3cd;
-  color: #856404;
-  border: 1px solid #ffeaa7;
-}
-.admin-main .admin-cards .admin-card .badge.approved {
-  font-size: 0.8rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-  background: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-}
-.admin-main .admin-cards .admin-card .badge.rejected {
-  font-size: 0.8rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-  background: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-}
-.admin-main .admin-cards .admin-card .badge.unknown {
-  font-size: 0.8rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-  background: #e2e3e5;
-  color: #383d41;
-  border: 1px solid #d6d8db;
 }
 .admin-main .admin-cards .admin-card .admin-actions {
   display: flex;
@@ -1057,76 +1039,27 @@ form p {
   margin-top: 0.5rem;
 }
 .admin-main .admin-cards .admin-card .admin-actions .btn-approve {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #d4edda;
   padding: 0.3rem 0.8rem;
   font-size: 14px;
-}
-.admin-main .admin-cards .admin-card .admin-actions .btn-approve:active {
-  transform: translateY(1px);
+  background-color: #d4edda;
+  color: #155724;
 }
 .admin-main .admin-cards .admin-card .admin-actions .btn-approve:hover {
   background-color: #155724;
   color: #d4edda;
 }
 .admin-main .admin-cards .admin-card .admin-actions .btn-reject {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: crimson;
-  color: white;
   padding: 0.3rem 0.8rem;
   font-size: 14px;
-}
-.admin-main .admin-cards .admin-card .admin-actions .btn-reject:active {
-  transform: translateY(1px);
 }
 .admin-main .admin-cards .admin-card .admin-actions .btn-edit {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: #fff;
-  color: #9fb1e2;
-  border: 1px solid #9fb1e2;
-  font-weight: bold;
   padding: 0.3rem 0.8rem;
   font-size: 14px;
 }
-.admin-main .admin-cards .admin-card .admin-actions .btn-edit:active {
-  transform: translateY(1px);
-}
-.admin-main .admin-cards .admin-card .admin-actions .btn-edit:hover {
-  background-color: #9fb1e2;
-  color: #fff;
-}
 .admin-main .admin-cards .admin-card .admin-actions .btn-delete {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: crimson;
-  color: white;
   padding: 0.3rem 0.8rem;
   font-size: 14px;
   background-color: #dc3545;
-}
-.admin-main .admin-cards .admin-card .admin-actions .btn-delete:active {
-  transform: translateY(1px);
 }
 .admin-main .admin-cards .admin-card .admin-details {
   margin-top: 0.5rem;
@@ -1153,27 +1086,6 @@ form p {
   gap: 1.5rem;
   margin: 2rem 0;
 }
-.admin-main .stats-grid .stat-card {
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #94dcfd;
-  text-align: center;
-  padding: 1.5rem;
-  background: rgba(148, 220, 253, 0.05);
-}
-.admin-main .stats-grid .stat-card .stat-number {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #94dcfd;
-  font-family: "Bruno Ace", sans-serif;
-}
-.admin-main .stats-grid .stat-card .stat-label {
-  font-size: 14px;
-  color: #9fb1e2;
-  margin-top: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
 .admin-main .admin-nav {
   display: flex;
   flex-direction: row;
@@ -1186,44 +1098,9 @@ form p {
   border-radius: 10px;
 }
 .admin-main .admin-nav .nav-item {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: #fff;
-  color: #9fb1e2;
-  border: 1px solid #9fb1e2;
-  font-weight: bold;
   padding: 0.5rem 1.5rem;
   text-decoration: none;
   border-radius: 5px;
-}
-.admin-main .admin-nav .nav-item:active {
-  transform: translateY(1px);
-}
-.admin-main .admin-nav .nav-item:hover {
-  background-color: #9fb1e2;
-  color: #fff;
-}
-.admin-main .admin-nav .nav-item.active {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: #94dcfd;
-  color: #000619;
-  border: 1px solid #94dcfd;
-}
-.admin-main .admin-nav .nav-item.active:active {
-  transform: translateY(1px);
-}
-.admin-main .admin-nav .nav-item.active:hover {
-  background-color: #000619;
-  color: #94dcfd;
 }
 .admin-main .admin-nav .nav-item:hover {
   transform: translateY(-2px);
@@ -1293,40 +1170,13 @@ form p {
   margin-top: 2rem;
 }
 .admin-main .admin-pagination .page-btn {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
   padding: 0.5rem 0.75rem;
   border: 1px solid #94dcfd;
   color: #94dcfd;
   background: transparent;
 }
-.admin-main .admin-pagination .page-btn:active {
-  transform: translateY(1px);
-}
 .admin-main .admin-pagination .page-btn:hover {
   background: rgba(148, 220, 253, 0.1);
-}
-.admin-main .admin-pagination .page-btn.active {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: #94dcfd;
-  color: #000619;
-  border: 1px solid #94dcfd;
-}
-.admin-main .admin-pagination .page-btn.active:active {
-  transform: translateY(1px);
-}
-.admin-main .admin-pagination .page-btn.active:hover {
-  background-color: #000619;
-  color: #94dcfd;
 }
 .admin-main .admin-pagination .page-btn:disabled {
   opacity: 0.5;
@@ -1554,58 +1404,10 @@ form p {
   align-items: center;
   gap: 1rem;
 }
-.detail-actions .btn-edit {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: #fff;
-  color: #9fb1e2;
-  border: 1px solid #9fb1e2;
-  font-weight: bold;
-}
-.detail-actions .btn-edit:active {
-  transform: translateY(1px);
-}
-.detail-actions .btn-edit:hover {
-  background-color: #9fb1e2;
-  color: #fff;
-}
-.detail-actions .btn-delete {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: crimson;
-  color: white;
-}
-.detail-actions .btn-delete:active {
-  transform: translateY(1px);
-}
 .detail-actions .btn-back {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: #94dcfd;
-  color: #000619;
-  border: 1px solid #94dcfd;
   background-color: transparent;
   color: #94dcfd;
   border: 1px solid #94dcfd;
-}
-.detail-actions .btn-back:active {
-  transform: translateY(1px);
-}
-.detail-actions .btn-back:hover {
-  background-color: #000619;
-  color: #94dcfd;
 }
 .detail-actions .btn-back:hover {
   background-color: #94dcfd;
@@ -1630,20 +1432,11 @@ form p {
   border-top: 1px solid rgba(148, 220, 253, 0.3);
 }
 .detail-navigation .nav-link {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
   background-color: transparent;
   color: #94dcfd;
   border: 1px solid rgba(148, 220, 253, 0.5);
   text-decoration: none;
   padding: 0.5rem 1rem;
-}
-.detail-navigation .nav-link:active {
-  transform: translateY(1px);
 }
 .detail-navigation .nav-link:hover {
   background-color: rgba(148, 220, 253, 0.1);
@@ -1677,120 +1470,87 @@ form p {
   align-items: center;
   padding: 1.5rem;
 }
-.ranking h2 {
-  margin-bottom: 2rem;
-  text-align: center;
-  color: #9fb1e2;
+.ranking .ranking-table {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(159, 177, 226, 0.03);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(148, 220, 253, 0.1);
 }
-.ranking .criteria-selector {
-  margin-bottom: 2rem;
+.ranking .ranking-header {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.ranking .criteria-selector .criteria-btn {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: transparent;
-  color: #94dcfd;
-  border: 1px solid rgba(148, 220, 253, 0.5);
-  padding: 0.5rem 1.5rem;
-}
-.ranking .criteria-selector .criteria-btn:active {
-  transform: translateY(1px);
-}
-.ranking .criteria-selector .criteria-btn:hover {
-  background-color: rgba(148, 220, 253, 0.1);
-  border-color: #94dcfd;
-}
-.ranking .criteria-selector .criteria-btn.active {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: #94dcfd;
-  color: #000619;
-  border: 1px solid #94dcfd;
-}
-.ranking .criteria-selector .criteria-btn.active:active {
-  transform: translateY(1px);
-}
-.ranking .criteria-selector .criteria-btn.active:hover {
-  background-color: #000619;
-  color: #94dcfd;
+  justify-content: space-between;
+  background: rgba(159, 177, 226, 0.1);
+  padding: 1rem;
+  font-weight: bold;
+  color: #9fb1e2;
+  border-bottom: 2px solid rgba(148, 220, 253, 0.2);
 }
 @media screen and (max-width: 767px) {
-  .ranking .criteria-selector {
-    flex-direction: column;
-    width: 100%;
-  }
-  .ranking .criteria-selector .criteria-btn {
-    width: 100%;
-    margin-bottom: 0.5rem;
+  .ranking .ranking-header {
+    grid-template-columns: 60px 1fr 80px;
+    padding: 0.5rem;
   }
 }
 .ranking ul {
   width: 100%;
-  max-width: 800px;
-  margin-top: 20px;
+  margin: 0;
   list-style: none;
   padding: 0;
 }
 .ranking ul li {
-  padding: 10px 0;
-  border-top: 1px solid #94dcfd;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(148, 220, 253, 0.1);
   transition: all 0.2s ease;
-  padding: 1rem 0;
-  position: relative;
-}
-.ranking ul li:last-child {
-  border-bottom: 1px solid #94dcfd;
+  background: rgba(0, 6, 25, 0.5);
 }
 .ranking ul li:hover {
-  background-color: rgba(148, 220, 253, 0.05);
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  border-radius: 5px;
+  background: rgba(148, 220, 253, 0.05);
+  transform: translateX(5px);
+}
+.ranking ul li:last-child {
+  border-bottom: none;
+}
+@media screen and (max-width: 767px) {
+  .ranking ul li {
+    grid-template-columns: 60px 1fr 80px;
+    padding: 0.5rem;
+  }
 }
 .ranking ul li .rank-position {
   font-weight: bold;
   color: #9fb1e2;
   font-family: "Bruno Ace", sans-serif;
-  min-width: 40px;
   text-align: center;
+  font-size: 1.1rem;
 }
 .ranking ul li .rank-position.rank-1 {
   color: #ffd700;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 .ranking ul li .rank-position.rank-1::before {
-  content: "🥇 ";
+  content: "🥇";
+  margin-right: 0.5rem;
 }
 .ranking ul li .rank-position.rank-2 {
   color: #c0c0c0;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 .ranking ul li .rank-position.rank-2::before {
-  content: "🥈 ";
+  content: "🥈";
+  margin-right: 0.5rem;
 }
 .ranking ul li .rank-position.rank-3 {
   color: #cd7f32;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 .ranking ul li .rank-position.rank-3::before {
-  content: "🥉 ";
+  content: "🥉";
+  margin-right: 0.5rem;
 }
 .ranking ul li .character-info {
   display: flex;
@@ -1798,175 +1558,40 @@ form p {
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  flex: 1;
-  min-width: 0;
+  justify-content: flex-start;
 }
 .ranking ul li .character-info .character-avatar {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 2px solid #94dcfd;
   -o-object-fit: cover;
      object-fit: cover;
   flex-shrink: 0;
 }
-.ranking ul li .character-info .character-details {
-  flex: 1;
-  min-width: 0;
-}
 .ranking ul li .character-info .character-details .character-name {
   font-weight: 600;
   color: #9fb1e2;
-  margin-bottom: 0.25rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  margin-bottom: 0.2rem;
 }
 .ranking ul li .character-info .character-details .character-work {
   font-size: 14px;
   color: #94dcfd;
   opacity: 0.8;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .ranking ul li .score {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 80px;
   text-align: center;
 }
 .ranking ul li .score .vote-count {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: bold;
   color: #94dcfd;
   font-family: "Bruno Ace", sans-serif;
 }
 .ranking ul li .score .vote-label {
-  font-size: 14px;
+  font-size: 0.8rem;
   color: #9fb1e2;
   opacity: 0.7;
-}
-@media screen and (max-width: 767px) {
-  .ranking ul li .character-info .character-avatar {
-    width: 40px;
-    height: 40px;
-  }
-  .ranking ul li .character-info .character-details .character-name {
-    font-size: 14px;
-  }
-  .ranking ul li .character-info .character-details .character-work {
-    font-size: 0.75rem;
-  }
-  .ranking ul li .score {
-    min-width: 60px;
-  }
-  .ranking ul li .score .vote-count {
-    font-size: 1rem;
-  }
-}
-.ranking .empty-ranking {
-  text-align: center;
-  padding: 2rem;
-  color: #9fb1e2;
-  opacity: 0.7;
-}
-.ranking .empty-ranking .empty-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-.ranking .empty-ranking .empty-title {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-  color: #9fb1e2;
-}
-.ranking .empty-ranking .empty-message {
-  font-size: 14px;
-  line-height: 1.6;
-}
-.ranking .ranking-stats {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background: rgba(159, 177, 226, 0.05);
-  border-radius: 10px;
-  border: 1px solid rgba(148, 220, 253, 0.3);
-}
-.ranking .ranking-stats .stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
-  text-align: center;
-}
-.ranking .ranking-stats .stats-grid .stat-item .stat-value {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #94dcfd;
-  font-family: "Bruno Ace", sans-serif;
-}
-.ranking .ranking-stats .stats-grid .stat-item .stat-label {
-  font-size: 14px;
-  color: #9fb1e2;
-  margin-top: 0.25rem;
-}
-@media screen and (max-width: 767px) {
-  .ranking .ranking-stats .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-.ranking .ranking-pagination {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 2rem;
-}
-.ranking .ranking-pagination .page-btn {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #94dcfd;
-  color: #94dcfd;
-  background: transparent;
-  min-width: 40px;
-}
-.ranking .ranking-pagination .page-btn:active {
-  transform: translateY(1px);
-}
-.ranking .ranking-pagination .page-btn:hover {
-  background: rgba(148, 220, 253, 0.1);
-}
-.ranking .ranking-pagination .page-btn.active {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: #94dcfd;
-  color: #000619;
-  border: 1px solid #94dcfd;
-}
-.ranking .ranking-pagination .page-btn.active:active {
-  transform: translateY(1px);
-}
-.ranking .ranking-pagination .page-btn.active:hover {
-  background-color: #000619;
-  color: #94dcfd;
-}
-.ranking .ranking-pagination .page-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-.ranking .ranking-pagination .page-info {
-  margin: 0 1rem;
-  font-size: 14px;
-  color: #9fb1e2;
 }
 
 .user-dashboard {
@@ -1987,15 +1612,6 @@ form p {
   margin-bottom: 1.5rem;
   color: #9fb1e2;
   font-family: "Bruno Ace", sans-serif;
-}
-.user-dashboard .user-stats div,
-.user-dashboard .account div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  padding: 15px 0;
-  border-top: 1px solid #94dcfd;
 }
 .user-dashboard .user-stats div .label,
 .user-dashboard .account div .label {
@@ -2077,43 +1693,6 @@ form p {
   gap: 1rem;
   margin-top: 1rem;
 }
-.user-dashboard .change-password .password-form .password-actions .btn-save-password {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: #94dcfd;
-  color: #000619;
-  border: 1px solid #94dcfd;
-}
-.user-dashboard .change-password .password-form .password-actions .btn-save-password:active {
-  transform: translateY(1px);
-}
-.user-dashboard .change-password .password-form .password-actions .btn-save-password:hover {
-  background-color: #000619;
-  color: #94dcfd;
-}
-.user-dashboard .change-password .password-form .password-actions .btn-cancel-password {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: #fff;
-  color: #9fb1e2;
-  border: 1px solid #9fb1e2;
-  font-weight: bold;
-}
-.user-dashboard .change-password .password-form .password-actions .btn-cancel-password:active {
-  transform: translateY(1px);
-}
-.user-dashboard .change-password .password-form .password-actions .btn-cancel-password:hover {
-  background-color: #9fb1e2;
-  color: #fff;
-}
 @media screen and (max-width: 767px) {
   .user-dashboard .change-password .password-form .password-actions {
     flex-direction: column;
@@ -2131,60 +1710,16 @@ form p {
   margin-top: 2rem;
 }
 .user-dashboard .account-btns .btn-edit-profile {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: #fff;
-  color: #9fb1e2;
-  border: 1px solid #9fb1e2;
-  font-weight: bold;
   padding: 0.5rem 1.5rem;
-}
-.user-dashboard .account-btns .btn-edit-profile:active {
-  transform: translateY(1px);
-}
-.user-dashboard .account-btns .btn-edit-profile:hover {
-  background-color: #9fb1e2;
-  color: #fff;
 }
 .user-dashboard .account-btns .btn-delete-account {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: crimson;
-  color: white;
   padding: 0.5rem 1.5rem;
 }
-.user-dashboard .account-btns .btn-delete-account:active {
-  transform: translateY(1px);
-}
 .user-dashboard .account-btns .btn-logout {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  background-color: #94dcfd;
-  color: #000619;
-  border: 1px solid #94dcfd;
   background-color: transparent;
   color: #94dcfd;
   border: 1px solid #94dcfd;
   padding: 0.5rem 1.5rem;
-}
-.user-dashboard .account-btns .btn-logout:active {
-  transform: translateY(1px);
-}
-.user-dashboard .account-btns .btn-logout:hover {
-  background-color: #000619;
-  color: #94dcfd;
 }
 .user-dashboard .account-btns .btn-logout:hover {
   background-color: #94dcfd;
@@ -2205,12 +1740,6 @@ form p {
   color: #9fb1e2;
 }
 .user-dashboard .vote-history .vote-list .vote-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  padding: 15px 0;
-  border-top: 1px solid #94dcfd;
   background: rgba(148, 220, 253, 0.02);
   border-radius: 5px;
   margin-bottom: 0.5rem;

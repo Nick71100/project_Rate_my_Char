@@ -2,8 +2,7 @@ import Characters from "../models/characters.model.js";
 import Votes from "../models/votes.model.js";
 
 const createChar = async (req, res) => {
-  const { name, short_desc, long_desc, image_url, id_gender, id_artwork } =
-    req.body;
+  const { name, long_desc, image_url, id_gender, id_artwork } = req.body;
   const id_user = req.user.id;
 
   try {
@@ -15,7 +14,6 @@ const createChar = async (req, res) => {
 
     const [result] = await Characters.create(
       name,
-      short_desc,
       long_desc || "",
       image_url || "",
       id_gender,
@@ -115,12 +113,10 @@ const updateChar = async (req, res) => {
     return res.status(400).json({ message: "ID de personnage manquant." });
   }
 
-  const { name, short_desc, long_desc, image_url, id_gender, id_artwork } =
-    req.body;
+  const { name, long_desc, image_url, id_gender, id_artwork } = req.body;
 
   const fieldsToUpdate = {
     name,
-    short_desc,
     long_desc,
     image_url,
     id_gender,

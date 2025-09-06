@@ -93,7 +93,6 @@ function Home() {
                   </div>
                   <h3>{char.name}</h3>
                   <img src={char.image_url} alt={`image de ${char.name}`} />
-                  <p>{char.short_desc}</p>
                   <p>Œuvre : {char.artwork_title || "Non spécifiée"}</p>
                   <div className="vote-count">
                     {char.vote_count} vote{char.vote_count > 1 ? "s" : ""}
@@ -111,7 +110,6 @@ function Home() {
                   <Link to={`/characters/${char.id}`}>
                     <h3>{char.name}</h3>
                     <img src={char.image_url} alt="image du personnage" />
-                    <p>{char.short_desc}</p>
                     <p>Œuvre : {char.artwork_title || char.id_artwork}</p>
                   </Link>
                 </div>

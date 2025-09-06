@@ -1,22 +1,155 @@
+.card {
+  padding: $padding-card;
+  border-radius: $border-radius-medium;
+  border: 1px solid $border-color;
+  background: inherit;
+}
+
 .cards {
-  @include flex-center($gap: 20px);
+  @include flex-center(20px);
   flex-wrap: wrap;
   padding: $padding-section;
+  justify-content: space-around;
+}
 
-  .card {
-    @include character-card;
+.card-character {
+  @extend .card;
+  width: 90%;
+  margin: 10px;
+  height: 450px;
+  display: flex;
+
+  a {
+    @include flex-column;
+    color: inherit;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+
+    h3 {
+      text-align: center;
+      margin: 20px 0;
+      flex-shrink: 0;
+    }
+
+    img {
+      width: 90%;
+      height: 200px;
+      object-fit: cover;
+      align-self: center;
+      border: 1px solid $border-color;
+      border-radius: $border-radius-small;
+    }
+  }
+
+  @include tablet {
+    width: 45%;
+    margin: 10px;
+    height: 420px;
+  }
+
+  @include desktop {
+    width: 22%;
+    margin: 10px;
+
+    a img {
+      width: auto;
+      height: 160px;
+    }
   }
 }
 
-.admin-cards {
-  @include flex-column;
+.card-admin {
+  @include flex-between;
+  padding: 15px 0;
+  border-top: 1px solid $border-color;
+  background: rgba($color-primary, 0.02);
+  border-radius: $border-radius-small;
+  margin-bottom: $spacing-sm;
+  transition: all $transition-fast;
 
-  .admin-card {
-    @include admin-card;
-
-    .char-header {
-      @include flex-center(row, 0.5rem);
-      margin-bottom: 0.5rem;
-    }
+  &:hover {
+    background: rgba($color-primary, 0.05);
+    transform: translateX(5px);
   }
+}
+
+.list-item {
+  padding: 10px 0;
+  border-top: 1px solid $border-color;
+  @include flex-between;
+  transition: all $transition-fast;
+
+  &:last-child {
+    border-bottom: 1px solid $border-color;
+  }
+
+  &:hover {
+    background-color: rgba($color-primary, 0.05);
+    padding-left: $spacing-sm;
+    padding-right: $spacing-sm;
+    border-radius: $border-radius-small;
+  }
+}
+
+.card-stat {
+  @extend .card;
+  text-align: center;
+  padding: $spacing-lg;
+  background: rgba($color-primary, 0.03);
+  transition: all $transition-fast;
+
+  &:hover {
+    background: rgba($color-primary, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .stat-number {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: $color-primary;
+    font-family: $font-heading;
+    margin-bottom: $spacing-xs;
+  }
+
+  .stat-label {
+    font-size: $font-size-small;
+    color: $color-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .stat-icon {
+    font-size: 2rem;
+    margin-bottom: $spacing-sm;
+    color: $color-primary;
+  }
+}
+
+.cards .card {
+  @extend .card-character;
+}
+
+.admin-cards .admin-card {
+  @extend .card-admin;
+}
+
+.ranking ul li {
+  @extend .list-item;
+  padding: $spacing-md 0;
+  position: relative;
+}
+
+.user-stats div,
+.account div {
+  @extend .card-admin;
+}
+
+.vote-history .vote-item {
+  @extend .card-admin;
+}
+
+.stats-grid .stat-card,
+.user-stats-grid .stat-card {
+  @extend .card-stat;
 }

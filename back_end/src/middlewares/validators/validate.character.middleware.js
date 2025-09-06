@@ -9,13 +9,6 @@ export const validateCharacterCreate = [
     .isLength({ min: 2, max: 255 })
     .withMessage("Le nom doit contenir entre 2 et 255 caractères"),
 
-  body("short_desc")
-    .trim()
-    .notEmpty()
-    .withMessage("Une description courte est requise")
-    .isLength({ min: 10, max: 150 })
-    .withMessage("La description doit contenir entre 10 et 150 caractères"),
-
   body("long_desc")
     .optional()
     .trim()

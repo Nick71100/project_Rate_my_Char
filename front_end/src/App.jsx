@@ -33,7 +33,7 @@ const App = () => {
   return (
     <>
       <Toaster position="bottom-right" duration={4000} />
-      <AppRoutes />;
+      <AppRoutes />
     </>
   );
 };

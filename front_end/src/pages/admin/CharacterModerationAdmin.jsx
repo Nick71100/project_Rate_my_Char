@@ -151,11 +151,6 @@ const CharacterModerationAdmin = () => {
                   </div>
 
                   <div className="descriptions">
-                    <div className="short-desc">
-                      <strong>Description courte:</strong>
-                      <p>{char.short_desc}</p>
-                    </div>
-
                     {char.long_desc && (
                       <div className="long-desc">
                         <strong>Description détaillée:</strong>

@@ -19,7 +19,7 @@
     }
 
     div {
-      @include admin-card;
+      @extend .card-admin;
 
       .label {
         font-weight: 500;
@@ -100,11 +100,11 @@
         margin-top: $spacing-md;
 
         .btn-save-password {
-          @include button-primary;
+          @extend .btn-primary;
         }
 
         .btn-cancel-password {
-          @include button-secondary;
+          @extend .btn-secondary;
         }
 
         @include mobile-only {
@@ -124,17 +124,17 @@
     margin-top: $spacing-xl;
 
     .btn-edit-profile {
-      @include button-secondary;
+      @extend .btn-secondary;
       padding: $spacing-sm $spacing-lg;
     }
 
     .btn-delete-account {
-      @include button-danger;
+      @extend .btn-danger;
       padding: $spacing-sm $spacing-lg;
     }
 
     .btn-logout {
-      @include button-primary;
+      @extend .btn-primary;
       background-color: transparent;
       color: $color-primary;
       border: 1px solid $color-primary;
@@ -163,7 +163,7 @@
 
     .vote-list {
       .vote-item {
-        @include admin-card;
+        @extend .card-admin;
         background: rgba($color-primary, 0.02);
         border-radius: $border-radius-small;
         margin-bottom: $spacing-sm;

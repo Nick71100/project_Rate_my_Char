@@ -24,6 +24,32 @@ function Characters() {
     fetchChars();
   }, []);
 
+  const getGenderBadgeClass = (gender) => {
+    const genderLower = gender?.toLowerCase() || "";
+
+    if (
+      genderLower.includes("homme") ||
+      genderLower.includes("masculin") ||
+      genderLower === "m"
+    ) {
+      return "badge-gender--male";
+    } else if (
+      genderLower.includes("femme") ||
+      genderLower.includes("féminin") ||
+      genderLower === "f"
+    ) {
+      return "badge-gender--female";
+    } else if (
+      genderLower.includes("autre") ||
+      genderLower.includes("non-binaire") ||
+      genderLower.includes("neutre")
+    ) {
+      return "badge-gender--other";
+    } else {
+      return "badge-gender--unspecified";
+    }
+  };
+
   if (loading) return <div>Chargement...</div>;
 
   return (
@@ -42,9 +68,13 @@ function Characters() {
                     e.target.src = "/default-character.png";
                   }}
                 />
-                <p>{char.short_desc}</p>
                 <p>Œuvre : {char.artwork_title || "Non spécifiée"}</p>
-                <p>Genre : {char.gender_label || "Non spécifié"}</p>
+                <div className="gender-section">
+                  <span>Genre : </span>
+                  <span className={getGenderBadgeClass(char.gender_label)}>
+                    {char.gender_label || "Non spécifié"}
+                  </span>
+                </div>
               </Link>
             </div>
           ))}

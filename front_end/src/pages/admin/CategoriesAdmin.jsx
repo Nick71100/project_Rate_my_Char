@@ -88,14 +88,16 @@ const CategoriesAdmin = () => {
       <section>
         <h3>Catégories</h3>
 
-        <div className="admin-form">
-          <input
-            type="text"
-            value={newCat}
-            onChange={(e) => setNewCat(e.target.value)}
-            placeholder="Nouvelle catégorie"
-          />
-          <button onClick={handleAddCategory}>Ajouter</button>
+        <div className="admin-options">
+          <div className="admin-form">
+            <input
+              type="text"
+              value={newCat}
+              onChange={(e) => setNewCat(e.target.value)}
+              placeholder="Nouvelle catégorie"
+            />
+            <button onClick={handleAddCategory}>Ajouter</button>
+          </div>
         </div>
 
         <div className="admin-cards">

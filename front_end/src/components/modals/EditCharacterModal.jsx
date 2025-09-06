@@ -10,7 +10,6 @@ const EditCharacterForm = ({
 }) => {
   const [formData, setFormData] = useState({
     name: character.name || "",
-    short_desc: character.short_desc || "",
     long_desc: character.long_desc || "",
     image_url: character.image_url || "",
     id_gender: character.id_gender || "",
@@ -86,17 +85,6 @@ const EditCharacterForm = ({
               type="text"
               name="name"
               value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </label>
-
-          <label>
-            Courte description :
-            <input
-              type="text"
-              name="short_desc"
-              value={formData.short_desc}
               onChange={handleChange}
               required
             />

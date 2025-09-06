@@ -3,7 +3,6 @@ import db from "../config/db.js";
 class Characters {
   static async create(
     name,
-    short_desc,
     long_desc,
     image_url,
     id_gender,
@@ -13,17 +12,8 @@ class Characters {
   ) {
     try {
       const result = await db.execute(
-        "INSERT INTO characters (name, short_desc, long_desc, image_url, id_gender, id_artwork, id_user, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-        [
-          name,
-          short_desc,
-          long_desc,
-          image_url,
-          id_gender,
-          id_artwork,
-          id_user,
-          status,
-        ]
+        "INSERT INTO characters (name, long_desc, image_url, id_gender, id_artwork, id_user, status) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [name, long_desc, image_url, id_gender, id_artwork, id_user, status]
       );
       return result;
     } catch (error) {
@@ -257,7 +247,6 @@ class Characters {
         c.id,
         c.name,
         c.image_url,
-        c.short_desc,
         a.title as artwork_title,
         cr.label as criteria_name,
         COUNT(v.id) as vote_count

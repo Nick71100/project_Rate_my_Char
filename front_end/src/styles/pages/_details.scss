@@ -205,15 +205,15 @@
   @include flex-center(row, $spacing-md);
 
   .btn-edit {
-    @include button-secondary;
+    @extend .btn-secondary;
   }
 
   .btn-delete {
-    @include button-danger;
+    @extend .btn-danger;
   }
 
   .btn-back {
-    @include button-primary;
+    @extend .btn-primary;
     background-color: transparent;
     color: $color-primary;
     border: 1px solid $color-primary;
@@ -241,7 +241,7 @@
   border-top: 1px solid rgba($border-color, 0.3);
 
   .nav-link {
-    @include button-base;
+    @extend .btn;
     background-color: transparent;
     color: $color-primary;
     border: 1px solid rgba($border-color, 0.5);

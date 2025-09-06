@@ -8,7 +8,6 @@ const AddCharacterModal = ({
   defaultArtworkId = 1,
 }) => {
   const [name, setName] = useState("");
-  const [shortDesc, setShortDesc] = useState("");
   const [longDesc, setLongDesc] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [idGender, setIdGender] = useState("");
@@ -68,11 +67,6 @@ const AddCharacterModal = ({
       return;
     }
 
-    if (!shortDesc.trim()) {
-      toast.warning("La description courte est requise.");
-      return;
-    }
-
     if (!idGender) {
       toast.warning("Veuillez sélectionner un genre.");
       return;
@@ -88,7 +82,6 @@ const AddCharacterModal = ({
     try {
       const newCharacter = {
         name: name.trim(),
-        short_desc: shortDesc.trim(),
         long_desc: longDesc.trim() || "",
         image_url: imageUrl.trim() || null,
         id_gender: parseInt(idGender),
@@ -174,23 +167,6 @@ const AddCharacterModal = ({
               disabled={loading}
               required
             />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="shortDesc">
-              Description courte <span style={{ color: "red" }}>*</span>
-            </label>
-            <textarea
-              id="shortDesc"
-              value={shortDesc}
-              onChange={(e) => setShortDesc(e.target.value)}
-              placeholder="Description en quelques mots (150 caractères max)"
-              maxLength="150"
-              rows="2"
-              disabled={loading}
-              required
-            />
-            <small>{shortDesc.length}/150 caractères</small>
           </div>
 
           <div className="form-group">
