@@ -18,7 +18,6 @@ const HandleVoteSubmit = async (votes) => {
           color: "white",
         },
       });
-      setShowVoteModal(false);
     }
   } catch (err) {
     console.error("Erreur lors de l'envoi des votes :", err);

@@ -1,7 +1,7 @@
 CREATE TABLE artworks(
    id INT AUTO_INCREMENT,
    title VARCHAR(255),
-   product_years INT,
+   product_year INT,
    image_url VARCHAR(255),
    PRIMARY KEY(id)
 );

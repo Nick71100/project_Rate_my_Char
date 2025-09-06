@@ -11,7 +11,7 @@ import checkRole from "../middlewares/checkRole.js";
 const router = express.Router();
 
 router.use(checkToken);
-router.use(checkRole(["admin"]));
+router.use(checkRole(1));
 
 router.get("/characters/pending", getPendingChars);
 

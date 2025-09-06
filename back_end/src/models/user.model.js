@@ -66,7 +66,6 @@ class Users {
   }
 
   static async findByPseudo(pseudo) {
-    console.log("toto");
     try {
       const [[result]] = await db.execute(
         `SELECT users.id, pseudo, email, password, email_verified, id_role AS role FROM users WHERE pseudo = ?`,

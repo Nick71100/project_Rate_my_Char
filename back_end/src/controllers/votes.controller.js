@@ -12,8 +12,6 @@ const castVote = async (req, res) => {
     for (const vote of votes) {
       const { id_character, id_criteria } = vote;
 
-      console.log("Traitement du vote:", vote);
-
       if (!id_character || !id_criteria) {
         return res.status(400).json({
           message:

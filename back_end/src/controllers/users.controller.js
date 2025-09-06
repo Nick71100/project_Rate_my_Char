@@ -98,7 +98,6 @@ const getCurrentUser = async (req, res) => {
     }
 
     res.status(200).json(user);
-    console.log("ID utilisateur extrait du token :", req.user.id);
   } catch (error) {
     console.error("Erreur getCurrentUser :", error);
     res.status(500).json({
